@@ -27,11 +27,11 @@ public class Cart {
     private Customer customer;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "fin_prdt_cd")
+    @JoinColumn(name = "fin_prdt_cd_loan")
     private Loan loan;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "fin_prdt_cd")
+    @JoinColumn(name = "fin_prdt_cd_deposit")
     private Deposit deposit;
 
 
