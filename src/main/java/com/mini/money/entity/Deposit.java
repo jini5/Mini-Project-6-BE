@@ -49,6 +49,8 @@ public class Deposit {
     @Column(name = "dcls_end_day")
     private String dclsEndDay;
 
+    @Column(name = "type")
+    private String type;
 
 //    public Deposit(String finPrdtCd, String korCoNm,
 //                  String finPrdtNm, String joinWay, String mtrtInt, String spclCnd,

@@ -46,6 +46,8 @@ public class Loan {
     @Column(name = "dcls_end_day")
     private String dclsEndDay;
 
+    @Column(name = "type")
+    private String type;
 
 //    public Loan(String finPrdtCd, String korCoNm,
 //                                 String finPrdtNm, String joinWay, String loanInciExpn,
