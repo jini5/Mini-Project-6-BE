@@ -15,8 +15,13 @@ public class Favor {
     @JoinColumn(name = "user_id")
     private Customer customer;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "fin_prdt_cd")
+    private Loan loan;
 
-
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "fin_prdt_cd")
+    private Deposit deposit;
 
 
 
