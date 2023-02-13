@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Builder
 @Getter
 @ToString
-public class HomeLoanDetail {
+public class LoanDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -47,7 +47,7 @@ public class HomeLoanDetail {
     @Column(name = "mrtg_type_nm")
     private String mrtgTypeNm;
 
-//    public HomeLoanDetail(String finPrdtCd,
+//    public LoanDetail(String finPrdtCd,
 //                    String rpayType, String rpayTypeNm, String lendRateType,
 //                    String lendRateTypeNm, String lendRateMin, String lendRateMax,
 //                    String lendRateAvg) {

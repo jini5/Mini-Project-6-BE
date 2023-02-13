@@ -5,13 +5,13 @@ import lombok.*;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "house_loan")
+@Table(name = "loan")
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Getter
 @ToString
-public class HomeLoan {
+public class Loan {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -47,7 +47,7 @@ public class HomeLoan {
     private String dclsEndDay;
 
 
-//    public HomeLoan(String finPrdtCd, String korCoNm,
+//    public Loan(String finPrdtCd, String korCoNm,
 //                                 String finPrdtNm, String joinWay, String loanInciExpn,
 //                                 String erlyRpayFee, String dlyRate, String loanLmt,
 //                                 String dclsStrtDay, String dclsEndDay) {
