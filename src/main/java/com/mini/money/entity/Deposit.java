@@ -56,6 +56,10 @@ public class Deposit {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "favor_id")
     private Favor favor;
+    
+    @Column(name = "type")
+    private String type;
+
 
 //    public Deposit(String finPrdtCd, String korCoNm,
 //                  String finPrdtNm, String joinWay, String mtrtInt, String spclCnd,

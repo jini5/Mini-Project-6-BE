@@ -46,6 +46,7 @@ public class Loan {
     @Column(name = "dcls_end_day")
     private String dclsEndDay;
 
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cart_id")
     private Cart cart;
@@ -53,6 +54,9 @@ public class Loan {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "favor_id")
     private Favor favor;
+
+    @Column(name = "type")
+    private String type;
 
 
 //    public Loan(String finPrdtCd, String korCoNm,
