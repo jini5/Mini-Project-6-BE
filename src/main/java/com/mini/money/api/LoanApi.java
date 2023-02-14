@@ -1,7 +1,6 @@
 package com.mini.money.api;
 
-import com.mini.money.entity.PublicLoan;
-import com.mini.money.repository.PublicLoanRepository;
+import com.mini.money.entity.Loan;
 import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -73,7 +72,7 @@ public class PublicLoanApi {
 
             JSONObject js = (JSONObject) parseBaseList.get(0);
 
-            PublicLoan publicLoan = new PublicLoan(Long.valueOf(String.valueOf(js.get("snq"))), String.valueOf(js.get("basYm")), String.valueOf(js.get("finPrdNm")),
+            Loan publicLoan = new Loan(Long.valueOf(String.valueOf(js.get("snq"))), String.valueOf(js.get("basYm")), String.valueOf(js.get("finPrdNm")),
                     String.valueOf(js.get("lnLmt")), String.valueOf(js.get("irtCtg")), String.valueOf(js.get("irt")), String.valueOf(js.get("maxTotLnTrm")),
                     String.valueOf(js.get("maxDfrmTrm")), String.valueOf(js.get("maxRdptTrm")), String.valueOf(js.get("rdptMthd")),
                     String.valueOf(js.get("usge")), String.valueOf(js.get("trgt")), String.valueOf(js.get("instCtg")),
