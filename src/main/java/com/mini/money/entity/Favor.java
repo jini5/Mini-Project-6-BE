@@ -1,27 +1,32 @@
 package com.mini.money.entity;
 
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "favor")
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Builder
 public class Favor {
 
     @Id
-    @Column(name = "id")
+    @Column(name = "favor_id")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "email")
     private Customer customer;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "fin_prdt_cd_loan", referencedColumnName = "fin_prdt_cd")
+    @JoinColumn(name = "snq")
     private Loan loan;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "fin_prdt_cd_deposit", referencedColumnName = "fin_prdt_cd")
-    private Deposit deposit;
 
 
 

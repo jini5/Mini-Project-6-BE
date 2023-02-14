@@ -18,21 +18,19 @@ public class Cart {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "cart_id")
     private Long id;
 
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "email")
     private Customer customer;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "fin_prdt_cd_loan", referencedColumnName = "fin_prdt_cd")
-    private Loan loan;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "fin_prdt_cd_deposit", referencedColumnName = "fin_prdt_cd")
-    private Deposit deposit;
+    @JoinColumn(name = "snq")
+    private Loan loan;
+
 
 
 }
