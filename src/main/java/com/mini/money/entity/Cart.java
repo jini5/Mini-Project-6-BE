@@ -26,6 +26,7 @@ public class Cart {
     @JoinColumn(name = "email")
     private Customer customer;
 
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "snq")
     private Loan loan;

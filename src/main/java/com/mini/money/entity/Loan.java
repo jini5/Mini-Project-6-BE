@@ -18,8 +18,8 @@ import javax.persistence.*;
 public class Loan {
 
     @Id
-    @Column(name="laon_id")
-    private Long id;
+    @Column(name="snq")
+    private Long snq;
 
     @Column(name="basYm")
     private String basYm;
