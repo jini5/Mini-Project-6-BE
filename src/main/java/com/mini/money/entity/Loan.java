@@ -1,76 +1,4 @@
-//package com.mini.money.entity;
-//
-//import lombok.*;
-//
-//import javax.persistence.*;
-//import java.io.Serializable;
-//
-//@Entity
-//@Table(name = "loan")
-//@NoArgsConstructor
-//@AllArgsConstructor
-//@Builder
-//@Getter
-//@ToString
-//public class Loan implements Serializable {
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    private Long id;
-//
-//    @Column(name = "fin_prdt_cd")
-//    private String finPrdtCd;
-//
-//    @Column(name = "kor_co_nm")
-//    private String korCoNm;
-//
-//    @Column(name = "fin_prdt_nm")
-//    private String finPrdtNm;
-//
-//    @Column(name = "join_way")
-//    private String joinWay;
-//
-//    @Column(name = "loan_inci_expn")
-//    private String loanInciExpn;
-//
-//    @Column(name = "erly_rpay_fee")
-//    private String erlyRpayFee;
-//
-//    @Column(name = "dly_rate")
-//    private String dlyRate;
-//
-//    @Column(name = "loan_lmt")
-//    private String loanLmt;
-//
-//    @Column(name = "dcls_strt_day")
-//    private String dclsStrtDay;
-//
-//    @Column(name = "dcls_end_day")
-//    private String dclsEndDay;
-//
-//
-//    @Column(name = "type")
-//    private String type;
-//
-//
-//    public Loan(String finPrdtCd, String korCoNm,
-//                                 String finPrdtNm, String joinWay, String loanInciExpn,
-//                                 String erlyRpayFee, String dlyRate, String loanLmt,
-//                                 String dclsStrtDay, String dclsEndDay) {
-//
-//        this.korCoNm = korCoNm;
-//        this.finPrdtCd = finPrdtCd;
-//        this.finPrdtNm = finPrdtNm;
-//        this.joinWay = joinWay;
-//        this.loanInciExpn = loanInciExpn;
-//        this.erlyRpayFee = erlyRpayFee;
-//        this.dlyRate = dlyRate;
-//        this.loanLmt = loanLmt;
-//        this.dclsStrtDay = dclsStrtDay;
-//        this.dclsEndDay = dclsEndDay;
-//
-//    }
-//}
-
+package com.mini.money.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -81,40 +9,106 @@ import javax.persistence.*;
 
 
 @Entity
-@Table(name = "loan")
+@Table(name = "public_loan")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Builder
 public class Loan {
-
     @Id
-    @Column(name="snq")
+    @Column(name = "snq")
     private Long snq;
 
-    @Column(name="basYm")
+    @Column(name = "bas_ym")
     private String basYm;
 
-    @Column(name="findPrdNm")
-    private String findPrdNm;
+    @Column(name = "fin_prd_nm")
+    private String finPrdNm;
 
-    @Column(name="lnLmt")
+    @Column(name = "ln_lmt")
     private String lnLmt;
 
-    @Column(name="irt")
+    @Column(name = "irt_ctg")
+    private String irtCtg;
+
+    @Column(name = "irt")
     private String irt;
 
-    @Column(name="maxTotLnTrm")
+    @Column(name = "max_tot_ln_trm")
     private String maxTotLnTrm;
 
-    @Column(name="maxDfmTrm")
-    private String maxDfmTrm;
+    @Column(name = "max_dfrm_trm")
+    private String maxDfrmTrm;
 
-    @Column(name="maxRdptTrm")
+    @Column(name = "max_rdpt_trm")
     private String maxRdptTrm;
 
-    @Column(name="rdptMthd")
+    @Column(name = "rdpt_mthd")
     private String rdptMthd;
 
+    @Column(name = "usge")
+    private String usge;
 
+    @Column(name = "trgt")
+    private String trgt;
+
+    @Column(name = "inst_ctg")
+    private String instCtg;
+
+    @Column(name = "ofr_inst_nm")
+    private String ofrInstNm;
+
+    @Column(name = "rsd_area_pamt_eglt_istm")
+    private String rsdAreaPamtEqltIstm;
+
+    @Column(name = "supr_tgt_dtl_cond")
+    private String suprTgtDtlCond;
+
+    @Column(name = "age")
+    private String age;
+
+    @Column(name = "incm")
+    private String incm;
+
+    @Column(name = "crdt_sc")
+    private String crdtSc;
+
+    @Column(name = "grn_inst")
+    private String grnInst;
+
+    @Column(name = "jn_mthd")
+    private String jnMthd;
+
+    @Column(name = "rpymd_cfe")
+    private String rpymdCfe;
+
+    @Column(name = "ln_icdcst")
+    private String lnIcdcst;
+
+    @Column(name = "ov_itr_yr")
+    private String ovItrYr;
+
+    @Column(name = "prft_add_irt_cond")
+    private String prftAddIrtCond;
+
+    @Column(name = "etc_ref_sbjc")
+    private String etcRefSbjc;
+
+    @Column(name = "hdl_inst")
+    private String hdlInst;
+
+    @Column(name = "cnpl")
+    private String cnpl;
+
+    @Column(name = "rlt_site")
+    private String rltSite;
+
+    @Column(name = "prd_nm")
+    private String prdNm;
+
+    @Column(name = "mgm_dln")
+    private String mgmDln;
+
+    @Column(name = "prd_ctg2")
+    private String prdCtg2;
 }

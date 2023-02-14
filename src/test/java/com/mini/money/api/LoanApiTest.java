@@ -7,17 +7,15 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.io.IOException;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 @SpringBootTest
-class PublicLoanApiTest {
+class LoanApiTest {
 
     @Autowired
-    PublicLoanApi publicLoanApi;
+    LoanApi loanApi;
 
     @Test
     void name() throws IOException, ParseException {
-        publicLoanApi.exampleApi();
+        loanApi.exampleApi();
 
     }
 }

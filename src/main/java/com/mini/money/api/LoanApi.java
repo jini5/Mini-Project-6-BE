@@ -1,6 +1,7 @@
 package com.mini.money.api;
 
 import com.mini.money.entity.Loan;
+import com.mini.money.repository.LoanRepository;
 import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -18,10 +19,10 @@ import java.net.URLEncoder;
 
 @Component
 @RequiredArgsConstructor
-public class PublicLoanApi {
+public class LoanApi {
     @Value("${api.auth}")
     private String auth;
-    private final PublicLoanRepository publicLoanRepository;
+    private final LoanRepository loanRepository;
 
 
     public void exampleApi() throws IOException, ParseException {
@@ -85,7 +86,7 @@ public class PublicLoanApi {
                     String.valueOf(js.get("mgmDln")), String.valueOf(js.get("prdCtg2")));
 
 
-            publicLoanRepository.save(publicLoan);
+            loanRepository.save(publicLoan);
         }
     }
 }
