@@ -27,7 +27,4 @@ public class Blacklist {
     @Column(name = "input_date")
     private Date inputDate;
 
-
-
-
 }
