@@ -1,6 +1,9 @@
 //package com.mini.money.api;
 //
+//import com.mini.money.entity.Loan;
+//import com.mini.money.entity.LoanDetail;
 //import com.mini.money.repository.LoanDetailRepository;
+//import com.mini.money.repository.LoanRepository;
 //import lombok.RequiredArgsConstructor;
 //import org.json.simple.JSONArray;
 //import org.json.simple.JSONObject;
@@ -15,18 +18,20 @@
 //import java.net.HttpURLConnection;
 //import java.net.URL;
 //import java.net.URLEncoder;
+//import java.util.List;
 //
 //@Component
 //@RequiredArgsConstructor
 //public class HomeLoanOptionApi {
 //
 //    private final LoanDetailRepository loanDetailRepository;
+//    private final LoanRepository loanRepository;
 //    @Value("${api.auth}")
 //    private String auth;
 //
 //    public void exampleOptionApi() throws IOException, ParseException {
 //        // 1. URL을 만들기 위한 StringBuilder.
-//        StringBuilder urlBuilder = new StringBuilder("http://finlife.fss.or.kr/finlifeapi/rentHouseLoanProductsSearch.json"); /*URL*/
+//        StringBuilder urlBuilder = new StringBuilder("http://finlife.fss.or.kr/finlifeapi/mortgageLoanProductsSearch.json"); /*URL*/
 //        // 2. 오픈 API의요청 규격에 맞는 파라미터 생성, 발급받은 인증키.
 //        urlBuilder.append("?" + URLEncoder.encode("auth","UTF-8") + "=" + auth); /*Service Key*/
 //        urlBuilder.append("&" + URLEncoder.encode("topFinGrpNo","UTF-8") + "=" + URLEncoder.encode("020000", "UTF-8")); /*은행*/
@@ -65,15 +70,23 @@
 //        JSONObject parseResult = (JSONObject) obj.get("result");
 //        JSONArray parseOptionList = (JSONArray) parseResult.get("optionList");
 //
-//        for (int i = 0; i < parseOptionList.size(); i++) {
-//            JSONObject saveData = (JSONObject) parseOptionList.get(i);
+//        List<Loan> list = loanRepository.findAll();
 //
-//            LoanDetail homeLoanDetail =
-//                    new LoanDetail(String.valueOf(saveData.get("fin_prdt_cd")), String.valueOf(saveData.get("rpay_type")), String.valueOf(saveData.get("rpay_type_nm")), String.valueOf(saveData.get("lend_rate_type")),
-//                            String.valueOf(saveData.get("lend_rate_type_nm")), String.valueOf(saveData.get("lend_rate_min")), String.valueOf(saveData.get("lend_rate_max")), String.valueOf(saveData.get("lend_rate_avg")));
+//        for (int i = 0; i < list.size(); i++) {
+//            for (int j = 0; j < parseOptionList.size(); j++) {
+//                Loan loan = list.get(i);
+//                JSONObject saveData = (JSONObject) parseOptionList.get(j);
 //
+//                if (loan.getFinPrdtCd().equals(String.valueOf(saveData.get("fin_prdt_cd")))) {
 //
-//            homeLoanDetailRepository.save(homeLoanDetail);
+//                    LoanDetail loanDetail =
+//                            new LoanDetail(loan, String.valueOf(saveData.get("rpay_type")), String.valueOf(saveData.get("rpay_type_nm")), String.valueOf(saveData.get("lend_rate_type")),
+//                                    String.valueOf(saveData.get("lend_rate_type_nm")), String.valueOf(saveData.get("lend_rate_min")), String.valueOf(saveData.get("lend_rate_max")), String.valueOf(saveData.get("lend_rate_avg")),
+//                                    String.valueOf(saveData.get("mrtg_type")), String.valueOf(saveData.get("mrtg_type_nm")));
+//
+//                    loanDetailRepository.save(loanDetail);
+//                }
+//            }
 //        }
 //
 //    }

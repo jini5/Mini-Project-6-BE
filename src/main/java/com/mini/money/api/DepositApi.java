@@ -27,7 +27,7 @@
 //
 //    public void exampleApi() throws IOException, ParseException {
 //        // 1. URL을 만들기 위한 StringBuilder.
-//        StringBuilder urlBuilder = new StringBuilder("http://finlife.fss.or.kr/finlifeapi/depositProductsSearch.json"); /*URL*/
+//        StringBuilder urlBuilder = new StringBuilder("http://finlife.fss.or.kr/finlifeapi/savingProductsSearch.json"); /*URL*/
 //        // 2. 오픈 API의요청 규격에 맞는 파라미터 생성, 발급받은 인증키.
 //        urlBuilder.append("?" + URLEncoder.encode("auth","UTF-8") + "=" + auth); /*Service Key*/
 //        urlBuilder.append("&" + URLEncoder.encode("topFinGrpNo","UTF-8") + "=" + URLEncoder.encode("020000", "UTF-8")); /*은행*/
