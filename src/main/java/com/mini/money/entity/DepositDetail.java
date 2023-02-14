@@ -17,7 +17,7 @@ public class DepositDetail {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "fin_prdt_cd")
+    @JoinColumn(name = "fin_prdt_cd", referencedColumnName = "fin_prdt_cd")
     private Deposit deposit;
 
     @Column(name = "intr_rate_type")
@@ -35,14 +35,14 @@ public class DepositDetail {
     @Column(name = "intr_rate2")
     private String intrRate2;
 
-//    public DepositDetail(String finPrdtCd, String intrRateType,
-//                        String intrRateTypeNm, String saveTrm, String intrRate, String intrRate2) {
-//
-//        this.finPrdtCd = finPrdtCd;
-//        this.intrRateType = intrRateType;
-//        this.intrRateTypeNm = intrRateTypeNm;
-//        this.saveTrm = saveTrm;
-//        this.intrRate = intrRate;
-//        this.intrRate2 = intrRate2;
-//    }
+    public DepositDetail(Deposit finPrdtCd, String intrRateType,
+                        String intrRateTypeNm, String saveTrm, String intrRate, String intrRate2) {
+
+        this.deposit = finPrdtCd;
+        this.intrRateType = intrRateType;
+        this.intrRateTypeNm = intrRateTypeNm;
+        this.saveTrm = saveTrm;
+        this.intrRate = intrRate;
+        this.intrRate2 = intrRate2;
+    }
 }
