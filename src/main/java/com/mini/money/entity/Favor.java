@@ -12,11 +12,11 @@ public class Favor {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "email")
     private Customer customer;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "loan_id")
+    @JoinColumn(name = "snq")
     private Loan loan;
 
 
