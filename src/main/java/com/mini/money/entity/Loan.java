@@ -13,8 +13,8 @@ import javax.persistence.*;
 @Table(name = "loan")
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 @Getter
+@Builder
 public class Loan {
 
     @Id
