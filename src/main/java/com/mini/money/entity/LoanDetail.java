@@ -17,7 +17,7 @@ public class LoanDetail {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "fin_prdt_cd")
+    @JoinColumn(name = "fin_prdt_cd", referencedColumnName = "fin_prdt_cd")
     private Loan loan;
 
     @Column(name = "rpay_type")
@@ -47,19 +47,21 @@ public class LoanDetail {
     @Column(name = "mrtg_type_nm")
     private String mrtgTypeNm;
 
-//    public LoanDetail(String finPrdtCd,
-//                    String rpayType, String rpayTypeNm, String lendRateType,
-//                    String lendRateTypeNm, String lendRateMin, String lendRateMax,
-//                    String lendRateAvg) {
-//
-//        this.finPrdtCd = finPrdtCd;
-//        this.rpayType = rpayType;
-//        this.rpayTypeNm = rpayTypeNm;
-//        this.lendRateType = lendRateType;
-//        this.lendRateTypeNm = lendRateTypeNm;
-//        this.lendRateMin = lendRateMin;
-//        this.lendRateMax = lendRateMax;
-//        this.lendRateAvg = lendRateAvg;
-//
-//    }
+    public LoanDetail(Loan finPrdtCd,
+                    String rpayType, String rpayTypeNm, String lendRateType,
+                    String lendRateTypeNm, String lendRateMin, String lendRateMax,
+                    String lendRateAvg, String mrtgType, String mrtgTypeNm) {
+
+        this.loan = finPrdtCd;
+        this.rpayType = rpayType;
+        this.rpayTypeNm = rpayTypeNm;
+        this.lendRateType = lendRateType;
+        this.lendRateTypeNm = lendRateTypeNm;
+        this.lendRateMin = lendRateMin;
+        this.lendRateMax = lendRateMax;
+        this.lendRateAvg = lendRateAvg;
+        this.mrtgType = mrtgType;
+        this.mrtgTypeNm = mrtgTypeNm;
+
+    }
 }

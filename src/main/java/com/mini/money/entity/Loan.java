@@ -3,6 +3,7 @@ package com.mini.money.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "loan")
@@ -11,7 +12,7 @@ import javax.persistence.*;
 @Builder
 @Getter
 @ToString
-public class Loan {
+public class Loan implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -51,21 +52,21 @@ public class Loan {
     private String type;
 
 
-//    public Loan(String finPrdtCd, String korCoNm,
-//                                 String finPrdtNm, String joinWay, String loanInciExpn,
-//                                 String erlyRpayFee, String dlyRate, String loanLmt,
-//                                 String dclsStrtDay, String dclsEndDay) {
-//
-//        this.korCoNm = korCoNm;
-//        this.finPrdtCd = finPrdtCd;
-//        this.finPrdtNm = finPrdtNm;
-//        this.joinWay = joinWay;
-//        this.loanInciExpn = loanInciExpn;
-//        this.erlyRpayFee = erlyRpayFee;
-//        this.dlyRate = dlyRate;
-//        this.loanLmt = loanLmt;
-//        this.dclsStrtDay = dclsStrtDay;
-//        this.dclsEndDay = dclsEndDay;
-//
-//    }
+    public Loan(String finPrdtCd, String korCoNm,
+                                 String finPrdtNm, String joinWay, String loanInciExpn,
+                                 String erlyRpayFee, String dlyRate, String loanLmt,
+                                 String dclsStrtDay, String dclsEndDay) {
+
+        this.korCoNm = korCoNm;
+        this.finPrdtCd = finPrdtCd;
+        this.finPrdtNm = finPrdtNm;
+        this.joinWay = joinWay;
+        this.loanInciExpn = loanInciExpn;
+        this.erlyRpayFee = erlyRpayFee;
+        this.dlyRate = dlyRate;
+        this.loanLmt = loanLmt;
+        this.dclsStrtDay = dclsStrtDay;
+        this.dclsEndDay = dclsEndDay;
+
+    }
 }

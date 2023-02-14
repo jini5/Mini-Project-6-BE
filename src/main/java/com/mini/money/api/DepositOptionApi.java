@@ -1,7 +1,9 @@
 //package com.mini.money.api;
 //
+//import com.mini.money.entity.Deposit;
 //import com.mini.money.entity.DepositDetail;
 //import com.mini.money.repository.DepositDetailRepository;
+//import com.mini.money.repository.DepositRepository;
 //import lombok.RequiredArgsConstructor;
 //import org.json.simple.JSONArray;
 //import org.json.simple.JSONObject;
@@ -16,18 +18,20 @@
 //import java.net.HttpURLConnection;
 //import java.net.URL;
 //import java.net.URLEncoder;
+//import java.util.List;
 //
 //@Component
 //@RequiredArgsConstructor
 //public class DepositOptionApi {
 //
 //    private final DepositDetailRepository depositDetailRepository;
+//    private final DepositRepository depositRepository;
 //    @Value("${api.auth}")
 //    private String auth;
 //
 //    public void exampleOptionApi() throws IOException, ParseException {
 //        // 1. URL을 만들기 위한 StringBuilder.
-//        StringBuilder urlBuilder = new StringBuilder("http://finlife.fss.or.kr/finlifeapi/depositProductsSearch.json"); /*URL*/
+//        StringBuilder urlBuilder = new StringBuilder("http://finlife.fss.or.kr/finlifeapi/savingProductsSearch.json"); /*URL*/
 //        // 2. 오픈 API의요청 규격에 맞는 파라미터 생성, 발급받은 인증키.
 //        urlBuilder.append("?" + URLEncoder.encode("auth","UTF-8") + "=" + auth); /*Service Key*/
 //        urlBuilder.append("&" + URLEncoder.encode("topFinGrpNo","UTF-8") + "=" + URLEncoder.encode("020000", "UTF-8")); /*은행*/
@@ -66,15 +70,22 @@
 //        JSONObject parseResult = (JSONObject) obj.get("result");
 //        JSONArray parseOptionList = (JSONArray) parseResult.get("optionList");
 //
-//        for (int i = 0; i < parseOptionList.size(); i++) {
-//            JSONObject saveData = (JSONObject) parseOptionList.get(i);
+//        List<Deposit> list = depositRepository.findAll();
 //
-//            DepositDetail depositDetail =
-//                    new DepositDetail(String.valueOf(saveData.get("fin_prdt_cd")), String.valueOf(saveData.get("intr_rate_type")), String.valueOf(saveData.get("intr_rate_type_nm")),
-//                            String.valueOf(saveData.get("save_trm")), String.valueOf(saveData.get("intr_rate")), String.valueOf(saveData.get("intr_rate2")));
+//        for (int i = 0; i < list.size(); i++) {
+//            for (int j = 0; j < parseOptionList.size(); j++) {
+//                Deposit deposit = list.get(i);
+//                JSONObject saveData = (JSONObject) parseOptionList.get(j);
 //
+//                if (deposit.getFinPrdtCd().equals(String.valueOf(saveData.get("fin_prdt_cd")))) {
 //
-//            depositDetailRepository.save(depositDetail);
+//                    DepositDetail depositDetail =
+//                            new DepositDetail(deposit, String.valueOf(saveData.get("intr_rate_type")), String.valueOf(saveData.get("intr_rate_type_nm")),
+//                                    String.valueOf(saveData.get("save_trm")), String.valueOf(saveData.get("intr_rate")), String.valueOf(saveData.get("intr_rate2")));
+//
+//                    depositDetailRepository.save(depositDetail);
+//                }
+//            }
 //        }
 //
 //    }

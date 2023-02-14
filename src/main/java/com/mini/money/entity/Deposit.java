@@ -3,6 +3,7 @@ package com.mini.money.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "deposit")
@@ -11,7 +12,7 @@ import javax.persistence.*;
 @Builder
 @Getter
 @ToString
-public class Deposit {
+public class Deposit implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -54,22 +55,22 @@ public class Deposit {
     private String type;
 
 
-//    public Deposit(String finPrdtCd, String korCoNm,
-//                  String finPrdtNm, String joinWay, String mtrtInt, String spclCnd,
-//                  String joinMember, String etcNote, String maxLimit,
-//                  String dclsStrtDay, String dclsEndDay) {
-//
-//        this.finPrdtCd = finPrdtCd;
-//        this.korCoNm = korCoNm;
-//        this.finPrdtNm = finPrdtNm;
-//        this.joinWay = joinWay;
-//        this.mtrtInt = mtrtInt;
-//        this.spclCnd = spclCnd;
-//        this.joinMember = joinMember;
-//        this.etcNote = etcNote;
-//        this.maxLimit = maxLimit;
-//        this.dclsStrtDay = dclsStrtDay;
-//        this.dclsEndDay = dclsEndDay;
-//
-//    }
+    public Deposit(String finPrdtCd, String korCoNm,
+                  String finPrdtNm, String joinWay, String mtrtInt, String spclCnd,
+                  String joinMember, String etcNote, String maxLimit,
+                  String dclsStrtDay, String dclsEndDay) {
+
+        this.finPrdtCd = finPrdtCd;
+        this.korCoNm = korCoNm;
+        this.finPrdtNm = finPrdtNm;
+        this.joinWay = joinWay;
+        this.mtrtInt = mtrtInt;
+        this.spclCnd = spclCnd;
+        this.joinMember = joinMember;
+        this.etcNote = etcNote;
+        this.maxLimit = maxLimit;
+        this.dclsStrtDay = dclsStrtDay;
+        this.dclsEndDay = dclsEndDay;
+
+    }
 }
