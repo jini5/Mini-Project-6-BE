@@ -5,6 +5,7 @@ import com.mini.money.dto.LoanResDTO;
 import com.mini.money.service.LoanService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -19,5 +20,9 @@ public class LoanController {
     public List<LoanResDTO> selectLoanList(){
         return service.selectLoanList();
     }
-    
+
+    @GetMapping("finance/loan/{snq}")
+    public LoanResDTO selectLoan(@PathVariable("snq") Long snq) {
+        return service.selectLoanAllInfo(snq);
+    }
 }
