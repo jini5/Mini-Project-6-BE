@@ -7,7 +7,9 @@ import com.mini.money.dto.LogInResDTO;
 import com.mini.money.entity.Customer;
 import com.mini.money.jwt.JwtProvider;
 import com.mini.money.repository.CustomerRepository;
+import com.mini.money.repository.TokenRepository;
 import com.mini.money.service.CustomerService;
+import com.mini.money.service.TokenService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -58,8 +60,6 @@ public class  CustomerServiceImpl implements CustomerService {
 
             String token = jwtProvider.makeToken(customer);
             LogInResDTO logInResDTO = new LogInResDTO(customer, token);
-
-            System.out.println(logInResDTO.toString());
 
             return logInResDTO;
 

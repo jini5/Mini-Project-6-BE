@@ -17,19 +17,21 @@ public class TokenServiceImpl implements TokenService{
     @Override
     public String logout(String token) {
         if(checkBlacklist(token)){
-            return "이미 만료된 토큰입니다. 다시 로그인해주세요.";
+            return null;
         }else{
             try{
+                System.out.println(token);
                 tokenRepository.save(Blacklist.builder().token(token).build());
                 return "success";
             }catch (Exception e){
-                return "failed";
+                return null;
             }
         }
     }
 
     @Override
     public boolean checkBlacklist(String token) {
+        System.out.println("checkBlacklist   "+token);
         return tokenRepository.existsByToken(token);
     }
 }
