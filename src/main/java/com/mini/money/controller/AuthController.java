@@ -18,6 +18,7 @@ public class AuthController {
 
     private final CustomerService customerService;
     private final TokenService tokenService;
+    private final TokenRepository tokenRepository;
 
 
     @PostMapping("/signup")
@@ -32,10 +33,8 @@ public class AuthController {
 ///https://fa466e8e-2ce8-447d-b2dd-517832056015.mock.pstmn.io
     @PostMapping("/logout")
     public String logOut(@RequestHeader(name = "Authorization") String token){
-        System.out.println(token);
-
-        tokenService.logout(token);
-        return "success";
+       tokenService.logout(token);
+       return "success";
     }
 
 
