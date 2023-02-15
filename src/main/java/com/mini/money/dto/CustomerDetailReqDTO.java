@@ -4,8 +4,6 @@ import com.mini.money.entity.Customer;
 import com.mini.money.entity.CustomerDetail;
 import lombok.*;
 
-
-
 @Getter
 @Setter
 @NoArgsConstructor
@@ -13,27 +11,16 @@ import lombok.*;
 @Builder
 @ToString
 public class CustomerDetailReqDTO {
-
-    private Long id;
-
-    private Customer customer;
-
-    private int age;
-
+    private Integer age;
     private String address;
-
     private String job;
-
     private String bank;
-
     private Double crdtGrade;
+    private Integer income;
 
-    private int income;
-
-
-    public CustomerDetail toEntity(){
+    public CustomerDetail toEntity(Customer customer) {
         return CustomerDetail.builder()
-                .customer(this.customer)
+                .customer(customer)
                 .age(this.age)
                 .address(this.address)
                 .job(this.job)
@@ -42,4 +29,5 @@ public class CustomerDetailReqDTO {
                 .income(this.income)
                 .build();
     }
+
 }
