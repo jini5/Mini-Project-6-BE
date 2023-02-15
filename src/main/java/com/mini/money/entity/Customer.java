@@ -2,12 +2,12 @@ package com.mini.money.entity;
 
 
 import lombok.*;
+import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.util.Date;
 
 @Entity
 @Table(name = "customer")
