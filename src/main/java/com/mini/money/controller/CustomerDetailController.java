@@ -1,12 +1,15 @@
 package com.mini.money.controller;
 
 import com.mini.money.dto.CustomerDetailReqDTO;
+import com.mini.money.dto.myinfo.MyCustomerDetailInfoResDTO;
 import com.mini.money.entity.Customer;
+import com.mini.money.repository.CustomerDetailRepository;
 import com.mini.money.service.CustomerDetailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,5 +28,15 @@ public class CustomerDetailController {
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
+    @GetMapping("/mypage/detail/info")
+    public ResponseEntity<Object> findMyDetailInfo(@AuthenticationPrincipal Customer customer) {
+        String email = customer.getEmail();
+        MyCustomerDetailInfoResDTO my = customerDetailService.findMyDetailInfo(email);
 
+        if (my == null) {
+            return new ResponseEntity<>("failed", HttpStatus.FOUND);
+        } else {
+            return new ResponseEntity<>(my, HttpStatus.OK);
+        }
+    }
 }
