@@ -39,10 +39,12 @@ public class JwtFilter extends OncePerRequestFilter {
         try{
             if(!tokenService.checkBlacklist(tokenHeader)){
                 LogInReqDTO logInReqDTO = jwtProvider.tokenToUser(tokenHeader);
-                SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(
-                        logInReqDTO,
-                        "",
-                        logInReqDTO.getAuthorities()));
+                if(logInReqDTO !=null) {
+                    SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(
+                            logInReqDTO,
+                            "",
+                            logInReqDTO.getAuthorities()));
+                }
             }
 
         }catch (ExpiredJwtException exception) {
