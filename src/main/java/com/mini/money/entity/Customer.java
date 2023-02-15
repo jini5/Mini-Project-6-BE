@@ -30,5 +30,6 @@ public class Customer {
     @Column(name = "phone")
     private String phone;
 
-
+    @Column(name = "role")
+    private String role;
 }
