@@ -21,8 +21,5 @@ public class LoanController {
         return service.selectLoanList();
     }
 
-    @GetMapping("finance/loan/{snq}")
-    public LoanResDTO selectLoan(@PathVariable("snq") Long snq) {
-        return service.selectLoanAllInfo(snq);
-    }
+
 }

@@ -20,6 +20,7 @@ public class LoanServiceImpl implements LoanService {
         List<LoanResDTO> list =  repository.findAll()
                 .stream()
                 .map(res -> new LoanResDTO(Loan.builder()
+                        .snq(res.getSnq())
                         .loanName(res.getLoanName())
                         .loanDescription(res.getLoanDescription())
                         .loanTarget(res.getLoanTarget())
@@ -35,9 +36,5 @@ public class LoanServiceImpl implements LoanService {
         return loanList;
     }
 
-    @Override
-    public LoanResDTO selectLoanAllInfo(Long snq) {
-        Loan loan = repository.findBySnq(snq).orElse(null);
-        return new LoanResDTO(loan);
-    }
+
 }

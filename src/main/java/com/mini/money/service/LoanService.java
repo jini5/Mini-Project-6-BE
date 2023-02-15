@@ -8,5 +8,4 @@ public interface LoanService {
 
     List<LoanResDTO> selectLoanList();
 
-    LoanResDTO selectLoanAllInfo(Long snq);
 }

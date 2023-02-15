@@ -8,5 +8,4 @@ import java.util.Optional;
 public interface LoanRepository extends JpaRepository<Loan, Long> {
 
 
-    Optional<Loan> findBySnq(Long snq);
 }
