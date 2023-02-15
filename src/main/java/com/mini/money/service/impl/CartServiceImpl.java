@@ -17,6 +17,9 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public String addCart(Long snq, String email) {
+        if (email == null) {
+            return "failed";
+        }
         try {
             cartRepo.save(new CartReqDTO(email, snq).toEntity());
         }catch (Exception err) {
