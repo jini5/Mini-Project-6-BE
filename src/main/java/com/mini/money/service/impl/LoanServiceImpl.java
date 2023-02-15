@@ -34,4 +34,10 @@ public class LoanServiceImpl implements LoanService {
         }
         return loanList;
     }
+
+    @Override
+    public LoanResDTO selectLoanAllInfo(Long snq) {
+        Loan loan = repository.findBySnq(snq).orElse(null);
+        return new LoanResDTO(loan);
+    }
 }
