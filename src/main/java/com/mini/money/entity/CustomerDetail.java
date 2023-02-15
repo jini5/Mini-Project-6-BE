@@ -1,10 +1,7 @@
 package com.mini.money.entity;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -17,6 +14,7 @@ import javax.persistence.*;
 public class CustomerDetail {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="detail_id")
     private Long id;
 
@@ -25,7 +23,7 @@ public class CustomerDetail {
     private Customer customer;
 
     @Column(name="age")
-    private int age;
+    private Integer age;
 
     @Column(name="address")
     private String address;
@@ -40,7 +38,7 @@ public class CustomerDetail {
     private Double crdtGrade;
 
     @Column(name="income")
-    private int income;
+    private Integer income;
 
 
 }
