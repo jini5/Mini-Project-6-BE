@@ -1,6 +1,8 @@
 package com.mini.money.service.impl;
 
 import com.mini.money.dto.CustomerReqDTO;
+import com.mini.money.dto.LogInReqDTO;
+import com.mini.money.dto.LogInResDTO;
 import com.mini.money.entity.Customer;
 import com.mini.money.jwt.JwtProvider;
 import com.mini.money.repository.CustomerRepository;
@@ -44,6 +46,31 @@ public class AuthServiceImpl implements AuthService {
         }
 
     }
+
+    @Override
+    public LogInResDTO login(LogInReqDTO logInReqDTO) {
+
+        if(logInReqDTO.getEmail() == null || logInReqDTO.getPassword()==null){
+            return new LogInResDTO("아이디 혹은 비밀번호를 다시 확인해주세요.");
+        }else{
+            Customer customer = null;
+            try {
+                customer = customerRepository.findByEmail(logInReqDTO.getEmail());
+            }catch (Exception e){
+            }
+            if(customer ==null || !passwordEncoder.matches(logInReqDTO.getPassword(),customer.getPassword())){
+                throw new IllegalArgumentException();
+            }
+
+            String token = jwtProvider.makeToken(customer);
+            LogInResDTO logInResDTO = new LogInResDTO(customer, token);
+
+            return logInResDTO;
+
+        }
+
+    }
+
 
     private String encodingPassword(String password) {
         return passwordEncoder.encode(password);
