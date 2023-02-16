@@ -3,6 +3,7 @@ package com.mini.money.service;
 import com.mini.money.dto.LoanResDTO;
 import com.mini.money.dto.itemlist.WholeResDTO;
 import com.mini.money.entity.Loan;
+import com.mini.money.parameter.Office;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -13,4 +14,6 @@ public interface LoanService {
     List<LoanResDTO> selectLoanList();
 
     List<WholeResDTO> selectAll(Pageable pageable);
+
+    List<WholeResDTO> selectByOffice(Office office, Pageable pageable);
 }
