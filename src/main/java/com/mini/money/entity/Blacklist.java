@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -14,6 +16,7 @@ import java.util.Date;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
+@DynamicInsert
 public class Blacklist {
 
     @Id
@@ -24,6 +27,7 @@ public class Blacklist {
     @Column(name = "token")
     private String token;
 
+    @CreationTimestamp
     @Column(name = "input_date")
     private Date inputDate;
 

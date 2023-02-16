@@ -2,6 +2,7 @@ package com.mini.money.entity;
 
 
 import lombok.*;
+import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,6 +16,7 @@ import java.util.Date;
 @NoArgsConstructor
 @Builder
 @Getter
+@DynamicInsert
 public class Customer {
 
     @Id
