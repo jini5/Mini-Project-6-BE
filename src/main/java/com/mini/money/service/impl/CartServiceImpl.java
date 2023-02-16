@@ -2,6 +2,7 @@ package com.mini.money.service.impl;
 
 
 import com.mini.money.dto.cart.CartReqDTO;
+import com.mini.money.entity.Cart;
 import com.mini.money.entity.Customer;
 import com.mini.money.entity.Loan;
 import com.mini.money.repository.CartRepository;
@@ -10,6 +11,7 @@ import com.mini.money.repository.LoanRepository;
 import com.mini.money.service.CartService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -26,6 +28,20 @@ public class CartServiceImpl implements CartService {
         Customer customer = customerRepo.findByEmail(email);
         try {
             cartRepo.save(new CartReqDTO().toEntity(customer, loan));
+        }catch (Exception err) {
+            err.printStackTrace();
+            return "failed";
+        }
+        return "success";
+    }
+
+    @Transactional
+    @Override
+    public String deleteProduct(String email, Long snq) {
+        try {
+            Customer customer = customerRepo.findByEmail(email);
+            Loan loan = loanRepo.findBySnq(snq).orElse(null);
+            cartRepo.deleteByCustomerAndLoan(customer, loan);
         }catch (Exception err) {
             err.printStackTrace();
             return "failed";
