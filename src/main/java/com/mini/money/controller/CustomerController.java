@@ -24,7 +24,7 @@ public class CustomerController {
     private final TokenService tokenService;
 
     @GetMapping("/mypage/info")
-    public ResponseEntity<MyCustomerInfoResDTO> findMyInfo(@AuthenticationPrincipal Customer customer) {
+    public ResponseEntity<MyCustomerInfoResDTO> findMyInfo(@AuthenticationPrincipal LogInReqDTO customer) {
         String email = customer.getEmail();
         MyCustomerInfoResDTO myCustomerInfoResDTO = customerService.findMyInfo(email);
 
