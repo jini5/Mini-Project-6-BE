@@ -1,8 +1,14 @@
 package com.mini.money.service.impl;
 
 import com.mini.money.dto.LoanResDTO;
+import com.mini.money.dto.LogInReqDTO;
 import com.mini.money.dto.itemlist.WholeResDTO;
+import com.mini.money.entity.Customer;
+import com.mini.money.entity.CustomerDetail;
 import com.mini.money.entity.Loan;
+import com.mini.money.repository.CartRepository;
+import com.mini.money.repository.CustomerDetailRepository;
+import com.mini.money.repository.CustomerRepository;
 import com.mini.money.repository.LoanRepository;
 import com.mini.money.service.LoanService;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +25,10 @@ import java.util.stream.Collectors;
 public class LoanServiceImpl implements LoanService {
 
     private final LoanRepository repository;
+
+    private final CustomerDetailRepository customerDetailRepository;
+    private final CustomerRepository customerRepository;
+    private final CartRepository cartRepository;
 
     @Override
     public List<LoanResDTO> selectLoanList() {
@@ -53,6 +63,31 @@ public class LoanServiceImpl implements LoanService {
             wholeList.add(wholeResDTO);
         }
         return wholeList;
+    }
+
+    @Override
+    public List<LoanResDTO> memberCommendLoanList(LogInReqDTO logInReqDTO) {
+        Customer customer = customerRepository.findByEmail(logInReqDTO.getEmail());
+        String area = "전국";
+        Optional<CustomerDetail> customerDetail = customerDetailRepository.findByCustomer(customer);
+        if(!customerDetail.isEmpty()) {
+            if(customerDetail.get().getAddress() !=null){
+                area = customerDetail.get().getAddress();
+            }
+        }
+        List<LoanResDTO> list =  repository.findAllByAreaContaining(area)
+                .stream()
+                .map(res -> new LoanResDTO(Loan.builder()
+                        .snq(res.getSnq())
+                        .loanName(res.getLoanName())
+                        .loanDescription(res.getLoanDescription())
+                        .loanTarget(res.getLoanTarget())
+                        .baseRate(res.getBaseRate())
+                        .rate(res.getRate())
+                        .area(res.getArea())
+                        .build()))
+                .collect(Collectors.toList());
+        return list;
     }
 
 }
