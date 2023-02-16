@@ -1,8 +1,11 @@
 package com.mini.money.controller;
 
 import com.mini.money.dto.CustomerReqDTO;
+import com.mini.money.dto.LogInReqDTO;
+import com.mini.money.dto.LogInResDTO;
 import com.mini.money.dto.myinfo.MyCustomerInfoResDTO;
 import com.mini.money.entity.Customer;
+import com.mini.money.repository.TokenRepository;
 import com.mini.money.service.AuthService;
 import com.mini.money.service.CustomerService;
 import lombok.RequiredArgsConstructor;
@@ -31,6 +34,10 @@ public class CustomerController {
     @PostMapping("/signup")
     public String signUp(CustomerReqDTO signupReqDTO){
         return authService.signup(signupReqDTO);
+    }
+    @PostMapping("/login")
+    public LogInResDTO logIn(LogInReqDTO logInReqDTO){
+        return  authService.login(logInReqDTO);
     }
 
 
