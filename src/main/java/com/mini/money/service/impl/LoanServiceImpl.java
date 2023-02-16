@@ -3,6 +3,7 @@ package com.mini.money.service.impl;
 import com.mini.money.dto.LoanResDTO;
 import com.mini.money.dto.itemlist.WholeResDTO;
 import com.mini.money.entity.Loan;
+import com.mini.money.parameter.Office;
 import com.mini.money.repository.LoanRepository;
 import com.mini.money.service.LoanService;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +12,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -55,4 +58,32 @@ public class LoanServiceImpl implements LoanService {
         return wholeList;
     }
 
+    @Override
+    public List<WholeResDTO> selectByOffice(Office office, Pageable pageable) {
+        Office[] os = Office.values();
+        List<String> officeList = Arrays.stream(os).map(Objects::toString).collect(Collectors.toList());
+        officeList.remove("기타");
+
+        List<Loan> selectAllByOffice;
+
+        if (office.name().equals("기타")) {
+            selectAllByOffice = repository.findAllByDivisionOfficeNotIn(officeList, pageable);
+            System.out.println("1");
+        } else {
+            selectAllByOffice = repository.findAllByDivisionOfficeContaining(office.name(), pageable);
+            System.out.println("2");
+        }
+
+        List<WholeResDTO> wholeList = new ArrayList<>();
+
+        for (int i = 0; i < selectAllByOffice.size(); i++) {
+            Loan loan = selectAllByOffice.get(i);
+
+            WholeResDTO wholeResDTO = new WholeResDTO(loan.getSnq(), loan.getLoanName(),
+                    loan.getLoanDescription(), loan.getLoanTarget(), loan.getBaseRate(), loan.getRate()
+            );
+            wholeList.add(wholeResDTO);
+        }
+        return wholeList;
+    }
 }
