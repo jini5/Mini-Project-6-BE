@@ -15,11 +15,11 @@ public class CartReqDTO {
     private String email;
 
     private Long snq;
-    
-    public Cart toEntity() {
+
+    public Cart toEntity(Customer customer, Loan loan) {
         return Cart.builder()
-                .customer(Customer.builder().email(email).build())
-                .loan(Loan.builder().snq(snq).build())
+                .customer(customer)
+                .loan(loan)
                 .build();
     }
 
