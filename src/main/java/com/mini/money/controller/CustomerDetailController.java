@@ -1,6 +1,7 @@
 package com.mini.money.controller;
 
 import com.mini.money.dto.CustomerDetailReqDTO;
+import com.mini.money.dto.LogInReqDTO;
 import com.mini.money.dto.myinfo.MyCustomerDetailInfoResDTO;
 import com.mini.money.entity.Customer;
 import com.mini.money.repository.CustomerDetailRepository;
@@ -21,7 +22,7 @@ public class CustomerDetailController {
     private final CustomerDetailService customerDetailService;
 
     @PostMapping("/signup/detail")
-    public ResponseEntity<String> customerDetailInfo(@RequestBody CustomerDetailReqDTO reqDTO, @AuthenticationPrincipal Customer customer) {
+    public ResponseEntity<String> customerDetailInfo(@RequestBody CustomerDetailReqDTO reqDTO, @AuthenticationPrincipal LogInReqDTO customer) {
         String email = customer.getEmail();
         String message = customerDetailService.customerDetailInfo(email, reqDTO);
 
@@ -29,7 +30,7 @@ public class CustomerDetailController {
     }
 
     @GetMapping("/mypage/detail/info")
-    public ResponseEntity<Object> findMyDetailInfo(@AuthenticationPrincipal Customer customer) {
+    public ResponseEntity<Object> findMyDetailInfo(@AuthenticationPrincipal LogInReqDTO customer) {
         String email = customer.getEmail();
         MyCustomerDetailInfoResDTO my = customerDetailService.findMyDetailInfo(email);
 
