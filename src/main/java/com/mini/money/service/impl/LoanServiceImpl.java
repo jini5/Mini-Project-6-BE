@@ -1,9 +1,14 @@
 package com.mini.money.service.impl;
 
 import com.mini.money.dto.LoanResDTO;
+import com.mini.money.dto.LogInReqDTO;
 import com.mini.money.dto.itemlist.WholeResDTO;
+import com.mini.money.entity.Customer;
+import com.mini.money.entity.CustomerDetail;
 import com.mini.money.entity.Loan;
 import com.mini.money.parameter.*;
+import com.mini.money.repository.CustomerDetailRepository;
+import com.mini.money.repository.CustomerRepository;
 import com.mini.money.repository.LoanRepository;
 import com.mini.money.service.LoanService;
 import lombok.RequiredArgsConstructor;
@@ -11,10 +16,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -22,6 +24,8 @@ import java.util.stream.Collectors;
 public class LoanServiceImpl implements LoanService {
 
     private final LoanRepository repository;
+    private final CustomerDetailRepository customerDetailRepository;
+    private final CustomerRepository customerRepository;
 
     @Override
     public List<LoanResDTO> selectLoanList() {
@@ -197,6 +201,32 @@ public class LoanServiceImpl implements LoanService {
 
         return getWholeResDTOS(selectAllByKeyword);
     }
+
+    @Override
+    public List<LoanResDTO> memberCommendLoanList(LogInReqDTO logInReqDTO) {
+        Customer customer = customerRepository.findByEmail(logInReqDTO.getEmail());
+        String area = "전국";
+        Optional<CustomerDetail> customerDetail = customerDetailRepository.findByCustomer(customer);
+        if(!customerDetail.isEmpty()) {
+            if(customerDetail.get().getAddress() !=null){
+                area = customerDetail.get().getAddress();
+            }
+        }
+        List<LoanResDTO> list =  repository.findAllByAreaContaining(area)
+                .stream()
+                .map(res -> new LoanResDTO(Loan.builder()
+                        .snq(res.getSnq())
+                        .loanName(res.getLoanName())
+                        .loanDescription(res.getLoanDescription())
+                        .loanTarget(res.getLoanTarget())
+                        .baseRate(res.getBaseRate())
+                        .rate(res.getRate())
+                        .area(res.getArea())
+                        .build()))
+                .collect(Collectors.toList());
+        return list;
+    }
+
 
 
     private List<WholeResDTO> getWholeResDTOS(List<Loan> selectAllByArea) {
