@@ -3,6 +3,7 @@ package com.mini.money.controller;
 
 import com.mini.money.dto.LoanResDTO;
 import com.mini.money.dto.LogInReqDTO;
+import com.mini.money.dto.itemlist.CommendResDTO;
 import com.mini.money.dto.itemlist.WholeResDTO;
 import com.mini.money.parameter.*;
 import com.mini.money.service.LoanService;
@@ -77,7 +78,7 @@ public class LoanController {
     }
 
     @GetMapping("/finance/member/recommend/loan")
-    public List<LoanResDTO> memberRecommendList(@AuthenticationPrincipal LogInReqDTO logInReqDTO) {
+    public List<CommendResDTO> memberRecommendList(@AuthenticationPrincipal LogInReqDTO logInReqDTO) {
         return service.memberCommendLoanList(logInReqDTO);
     }
 }
