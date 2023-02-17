@@ -29,4 +29,6 @@ public interface LoanService {
 
     List<WholeResDTO> selectByCredit(String credit, Pageable pageable);
 
+    List<WholeResDTO> selectByKeyword(String keyword, Pageable pageable);
+
 }
