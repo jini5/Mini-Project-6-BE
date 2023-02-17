@@ -46,5 +46,7 @@ public interface LoanRepository extends JpaRepository<Loan, Long> {
     List<Loan> findAllByCreditScoreNotContaining(String credit, Pageable pageable);
 
     List<Loan> findAllByLoanNameContaining(String keyword, Pageable pageable);
+    List<Loan> findAllByAreaContaining(String area);
+
 
 }
