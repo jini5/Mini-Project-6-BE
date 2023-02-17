@@ -2,6 +2,7 @@ package com.mini.money.service.impl;
 
 import com.mini.money.dto.LoanResDTO;
 import com.mini.money.dto.LogInReqDTO;
+import com.mini.money.dto.itemlist.CommendResDTO;
 import com.mini.money.dto.itemlist.WholeResDTO;
 import com.mini.money.entity.Customer;
 import com.mini.money.entity.CustomerDetail;
@@ -203,7 +204,7 @@ public class LoanServiceImpl implements LoanService {
     }
 
     @Override
-    public List<LoanResDTO> memberCommendLoanList(LogInReqDTO logInReqDTO) {
+    public List<CommendResDTO> memberCommendLoanList(LogInReqDTO logInReqDTO) {
         Customer customer = customerRepository.findByEmail(logInReqDTO.getEmail());
         String area = "전국";
         Optional<CustomerDetail> customerDetail = customerDetailRepository.findByCustomer(customer);
@@ -212,19 +213,9 @@ public class LoanServiceImpl implements LoanService {
                 area = customerDetail.get().getAddress();
             }
         }
-        List<LoanResDTO> list =  repository.findAllByAreaContaining(area)
-                .stream()
-                .map(res -> new LoanResDTO(Loan.builder()
-                        .snq(res.getSnq())
-                        .loanName(res.getLoanName())
-                        .loanDescription(res.getLoanDescription())
-                        .loanTarget(res.getLoanTarget())
-                        .baseRate(res.getBaseRate())
-                        .rate(res.getRate())
-                        .area(res.getArea())
-                        .build()))
-                .collect(Collectors.toList());
-        return list;
+        List<Loan> CommendByArea =  repository.findAllByAreaContaining(area);
+
+        return getCommenResDTOS(CommendByArea);
     }
 
 
@@ -243,4 +234,20 @@ public class LoanServiceImpl implements LoanService {
         }
         return wholeList;
     }
+
+    private List<CommendResDTO> getCommenResDTOS(List<Loan> CommendByArea) {
+        List<CommendResDTO> commendList = new ArrayList<>();
+
+        for (int i = 0; i < CommendByArea.size(); i++) {
+            Loan loan = CommendByArea.get(i);
+            String[] targetList = loan.getLoanTarget().split(",");
+
+            CommendResDTO commendResDTO = new CommendResDTO(loan.getSnq(), loan.getLoanName(),
+                    loan.getLoanLimit(), loan.getProvider(), targetList, loan.getArea(), loan.getRate());
+
+            commendList.add(commendResDTO);
+        }
+        return commendList;
+    }
+
 }
