@@ -5,6 +5,7 @@ import com.mini.money.dto.LogInReqDTO;
 import com.mini.money.service.FavorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,5 +24,13 @@ public class FavorController {
         String email = customer.getEmail();
         Long snq = Long.valueOf(map.get("snq").toString());
         return service.addFavor(email, snq);
+    }
+
+
+    @DeleteMapping("/favor")
+    public String deleteFavor(@AuthenticationPrincipal LogInReqDTO customer, @RequestBody HashMap<String, Object> map) {
+        String email = customer.getEmail();
+        Long snq = Long.valueOf(map.get("snq").toString());
+        return service.deleteFavor(email, snq);
     }
 }

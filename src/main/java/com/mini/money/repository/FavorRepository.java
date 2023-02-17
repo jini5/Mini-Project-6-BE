@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface FavorRepository extends JpaRepository<Favor, Long> {
 
-
+    void deleteByCustomerAndLoan(Customer customer, Loan loan);
 
 
 }

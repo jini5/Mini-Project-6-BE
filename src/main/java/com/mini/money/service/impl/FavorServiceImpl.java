@@ -10,6 +10,7 @@ import com.mini.money.repository.LoanRepository;
 import com.mini.money.service.FavorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -35,9 +36,18 @@ public class FavorServiceImpl implements FavorService {
         return "success";
 
 
-
-
-
-
+    }
+    @Transactional
+    @Override
+    public String deleteFavor(String email, Long snq) {
+        try {
+            Customer customer = customerRepo.findByEmail(email);
+            Loan loan = loanRepo.findBySnq(snq).orElse(null);
+            favorRepo.deleteByCustomerAndLoan(customer, loan);
+        }catch (Exception err) {
+            err.printStackTrace();
+            return "failed";
+        }
+        return "success";
     }
 }
