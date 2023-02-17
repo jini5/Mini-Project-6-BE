@@ -2,6 +2,9 @@ package com.mini.money.service.impl;
 
 import com.mini.money.dto.LoanResDTO;
 import com.mini.money.dto.itemlist.WholeResDTO;
+import com.mini.money.dto.loan.LoanEtcResDTO;
+import com.mini.money.dto.loan.LoanProdInfoResDTO;
+import com.mini.money.dto.loan.LoanTargetResDTO;
 import com.mini.money.entity.Loan;
 import com.mini.money.parameter.*;
 import com.mini.money.repository.LoanRepository;
@@ -11,10 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -196,6 +196,23 @@ public class LoanServiceImpl implements LoanService {
         List<Loan> selectAllByKeyword = repository.findAllByLoanNameContaining(keyword, pageable);
 
         return getWholeResDTOS(selectAllByKeyword);
+    }
+
+    @Override
+    public HashMap<String, Object> selectLoanDetail(Long snq) {
+        Loan loan = repository.findBySnq(snq).orElse(null);
+
+        HashMap<String, Object> loanDetail = new HashMap<>();
+
+        LoanProdInfoResDTO prodInfo = new LoanProdInfoResDTO(loan);
+        LoanTargetResDTO targetInfo = new LoanTargetResDTO(loan);
+        LoanEtcResDTO etcInfo = new LoanEtcResDTO(loan);
+
+        loanDetail.put("loan", prodInfo);
+        loanDetail.put("target", targetInfo);
+        loanDetail.put("etc", etcInfo);
+
+        return loanDetail;
     }
 
 
