@@ -3,7 +3,7 @@ package com.mini.money.service.impl;
 import com.mini.money.dto.LoanResDTO;
 import com.mini.money.dto.itemlist.WholeResDTO;
 import com.mini.money.entity.Loan;
-import com.mini.money.parameter.Office;
+import com.mini.money.parameter.*;
 import com.mini.money.repository.LoanRepository;
 import com.mini.money.service.LoanService;
 import lombok.RequiredArgsConstructor;
@@ -50,8 +50,9 @@ public class LoanServiceImpl implements LoanService {
         List<WholeResDTO> wholeList = new ArrayList<>();
         for (int i = 0; i < selectAll.getSize(); i++) {
             Loan loan = selectAll.getContent().get(i);
+            String[] targetList = loan.getLoanTarget().split(",");
             WholeResDTO wholeResDTO = new WholeResDTO(loan.getSnq(), loan.getLoanName(),
-                    loan.getLoanDescription(), loan.getLoanTarget(), loan.getBaseRate(), loan.getRate());
+                    loan.getLoanLimit(), loan.getProvider(), targetList, loan.getRate());
 
             wholeList.add(wholeResDTO);
         }
@@ -68,20 +69,139 @@ public class LoanServiceImpl implements LoanService {
 
         if (office.name().equals("기타")) {
             selectAllByOffice = repository.findAllByDivisionOfficeNotIn(officeList, pageable);
-            System.out.println("1");
         } else {
             selectAllByOffice = repository.findAllByDivisionOfficeContaining(office.name(), pageable);
-            System.out.println("2");
         }
 
+        return getWholeResDTOS(selectAllByOffice);
+    }
+
+    @Override
+    public List<WholeResDTO> selectByArea(Area area, Pageable pageable) {
+        Area[] ar = Area.values();
+        List<String> areaList = Arrays.stream(ar).map(Objects::toString).collect(Collectors.toList());
+        areaList.remove("기타");
+
+        List<Loan> selectAllByArea;
+
+        if (area.name().equals("기타")) {
+            selectAllByArea = repository.findAllByAreaNotIn(areaList, pageable);
+        } else {
+            selectAllByArea = repository.findAllByAreaContaining(area.name(), pageable);
+        }
+
+        return getWholeResDTOS(selectAllByArea);
+    }
+
+    @Override
+    public List<WholeResDTO> selectByRepayment(Repayment repayment, Pageable pageable) {
+        Repayment[] rm = Repayment.values();
+        List<String> repayList = Arrays.stream(rm).map(Objects::toString).collect(Collectors.toList());
+        repayList.remove("기타");
+
+        List<Loan> selectAllByRepayment;
+
+        if (repayment.name().equals("기타")) {
+            selectAllByRepayment = repository.findAllByRepayMethodNotIn(repayList, pageable);
+        } else {
+            selectAllByRepayment = repository.findAllByRepayMethodContaining(repayment.name(), pageable);
+        }
+
+        return getWholeResDTOS(selectAllByRepayment);
+    }
+
+    @Override
+    public List<WholeResDTO> selectByUsge(Usge usge, Pageable pageable) {
+        Usge[] us = Usge.values();
+        List<String> usgeList = Arrays.stream(us).map(Objects::toString).collect(Collectors.toList());
+        usgeList.remove("기타");
+
+        List<Loan> selectAllByUsge;
+
+        if (usge.name().equals("기타")) {
+            selectAllByUsge = repository.findAllByUsgeNotIn(usgeList, pageable);
+        } else {
+            selectAllByUsge = repository.findAllByUsgeContaining(usge.name(), pageable);
+        }
+
+        return getWholeResDTOS(selectAllByUsge);
+    }
+
+    @Override
+    public List<WholeResDTO> selectByTarget(Target target, Pageable pageable) {
+        Target[] tr = Target.values();
+        List<String> targetList = Arrays.stream(tr).map(Objects::toString).collect(Collectors.toList());
+        targetList.remove("기타");
+
+        List<Loan> selectAllByTarget;
+
+        if (target.name().equals("기타")) {
+            selectAllByTarget = repository.findAllByLoanTargetNotIn(targetList, pageable);
+        } else {
+            selectAllByTarget = repository.findAllByLoanTargetContaining(target.name(), pageable);
+        }
+
+        return getWholeResDTOS(selectAllByTarget);
+    }
+
+    @Override
+    public List<WholeResDTO> selectByBaseRate(BaseRate baseRate, Pageable pageable) {
+        BaseRate[] br = BaseRate.values();
+        List<String> baseRateList = Arrays.stream(br).map(Objects::toString).collect(Collectors.toList());
+        baseRateList.remove("기타");
+
+        List<Loan> selectAllByBaseRate;
+
+        if (baseRate.name().equals("기타")) {
+            selectAllByBaseRate = repository.findAllByBaseRateNotIn(baseRateList, pageable);
+        } else {
+            selectAllByBaseRate = repository.findAllByBaseRateContaining(baseRate.name(), pageable);
+        }
+
+        return getWholeResDTOS(selectAllByBaseRate);
+    }
+
+    @Override
+    public List<WholeResDTO> selectByMaturity(String maturity, Pageable pageable) {
+        List<Loan> selectAllByMaturity;
+
+        String filter = "상시";
+
+        if (maturity.equals("상시")) {
+            selectAllByMaturity = repository.findAllByMaturityContaining(filter, pageable);
+        } else {
+            selectAllByMaturity = repository.findAllByMaturityNotContaining(filter, pageable);
+        }
+
+        return getWholeResDTOS(selectAllByMaturity);
+    }
+
+    @Override
+    public List<WholeResDTO> selectByCredit(String credit, Pageable pageable) {
+        List<Loan> selectAllByCredit;
+
+        String filter = "없음";
+
+        if (credit.equals("N")) {
+            selectAllByCredit = repository.findAllByCreditScoreContaining(filter, pageable);
+        } else {
+            selectAllByCredit = repository.findAllByCreditScoreNotContaining(filter, pageable);
+        }
+
+        return getWholeResDTOS(selectAllByCredit);
+    }
+
+
+    private List<WholeResDTO> getWholeResDTOS(List<Loan> selectAllByArea) {
         List<WholeResDTO> wholeList = new ArrayList<>();
 
-        for (int i = 0; i < selectAllByOffice.size(); i++) {
-            Loan loan = selectAllByOffice.get(i);
+        for (int i = 0; i < selectAllByArea.size(); i++) {
+            Loan loan = selectAllByArea.get(i);
+            String[] targetList = loan.getLoanTarget().split(",");
 
             WholeResDTO wholeResDTO = new WholeResDTO(loan.getSnq(), loan.getLoanName(),
-                    loan.getLoanDescription(), loan.getLoanTarget(), loan.getBaseRate(), loan.getRate()
-            );
+                    loan.getLoanLimit(), loan.getProvider(), targetList, loan.getRate());
+
             wholeList.add(wholeResDTO);
         }
         return wholeList;
