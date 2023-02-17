@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -77,6 +78,11 @@ public class LoanController {
         return service.selectByKeyword(keyword, pageable);
     }
 
+    @GetMapping("/finance/loan/detail/snq")
+    public HashMap<String, Object> selectLoanDetail(@RequestParam(name = "snq") Long snq){
+        return service.selectLoanDetail(snq);
+    }
+        
     @GetMapping("/finance/member/recommend/loan")
     public List<CommendResDTO> memberRecommendList(@AuthenticationPrincipal LogInReqDTO logInReqDTO) {
         return service.memberCommendLoanList(logInReqDTO);

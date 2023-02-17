@@ -4,6 +4,9 @@ import com.mini.money.dto.LoanResDTO;
 import com.mini.money.dto.LogInReqDTO;
 import com.mini.money.dto.itemlist.CommendResDTO;
 import com.mini.money.dto.itemlist.WholeResDTO;
+import com.mini.money.dto.loan.LoanEtcResDTO;
+import com.mini.money.dto.loan.LoanProdInfoResDTO;
+import com.mini.money.dto.loan.LoanTargetResDTO;
 import com.mini.money.entity.Customer;
 import com.mini.money.entity.CustomerDetail;
 import com.mini.money.entity.Loan;
@@ -204,6 +207,23 @@ public class LoanServiceImpl implements LoanService {
     }
 
     @Override
+    public HashMap<String, Object> selectLoanDetail(Long snq) {
+        Loan loan = repository.findBySnq(snq).orElse(null);
+
+        HashMap<String, Object> loanDetail = new HashMap<>();
+
+        LoanProdInfoResDTO prodInfo = new LoanProdInfoResDTO(loan);
+        LoanTargetResDTO targetInfo = new LoanTargetResDTO(loan);
+        LoanEtcResDTO etcInfo = new LoanEtcResDTO(loan);
+
+        loanDetail.put("loan", prodInfo);
+        loanDetail.put("target", targetInfo);
+        loanDetail.put("etc", etcInfo);
+
+        return loanDetail;
+    }
+
+    @Override
     public List<CommendResDTO> memberCommendLoanList(LogInReqDTO logInReqDTO) {
         Customer customer = customerRepository.findByEmail(logInReqDTO.getEmail());
         String area = "전국";
@@ -217,7 +237,6 @@ public class LoanServiceImpl implements LoanService {
 
         return getCommenResDTOS(CommendByArea);
     }
-
 
 
     private List<WholeResDTO> getWholeResDTOS(List<Loan> selectAllByArea) {
