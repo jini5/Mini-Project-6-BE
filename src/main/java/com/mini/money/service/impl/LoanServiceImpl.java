@@ -191,6 +191,13 @@ public class LoanServiceImpl implements LoanService {
         return getWholeResDTOS(selectAllByCredit);
     }
 
+    @Override
+    public List<WholeResDTO> selectByKeyword(String keyword, Pageable pageable) {
+        List<Loan> selectAllByKeyword = repository.findAllByLoanNameContaining(keyword, pageable);
+
+        return getWholeResDTOS(selectAllByKeyword);
+    }
+
 
     private List<WholeResDTO> getWholeResDTOS(List<Loan> selectAllByArea) {
         List<WholeResDTO> wholeList = new ArrayList<>();

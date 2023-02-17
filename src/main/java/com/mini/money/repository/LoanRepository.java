@@ -1,7 +1,6 @@
 package com.mini.money.repository;
 
 import com.mini.money.entity.Loan;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -45,5 +44,7 @@ public interface LoanRepository extends JpaRepository<Loan, Long> {
     List<Loan> findAllByCreditScoreContaining(String credit, Pageable pageable);
 
     List<Loan> findAllByCreditScoreNotContaining(String credit, Pageable pageable);
+
+    List<Loan> findAllByLoanNameContaining(String keyword, Pageable pageable);
 
 }

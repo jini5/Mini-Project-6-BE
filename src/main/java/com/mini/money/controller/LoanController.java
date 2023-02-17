@@ -69,4 +69,9 @@ public class LoanController {
         return service.selectByCredit(credit, pageable);
     }
 
+    @GetMapping("/finance/itemlist/keyword")
+    public List<WholeResDTO> selectByKeyword(@RequestParam(name = "keyword") String keyword, Pageable pageable) {
+        return service.selectByKeyword(keyword, pageable);
+    }
+
 }
