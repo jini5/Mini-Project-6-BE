@@ -3,13 +3,16 @@ package com.mini.money.service.impl;
 import com.mini.money.dto.CustomerReqDTO;
 import com.mini.money.dto.LogInReqDTO;
 import com.mini.money.dto.LogInResDTO;
+import com.mini.money.dto.myinfo.UpdateInfoReqDTO;
 import com.mini.money.entity.Customer;
 import com.mini.money.jwt.JwtProvider;
 import com.mini.money.repository.CustomerRepository;
 import com.mini.money.service.AuthService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -69,6 +72,36 @@ public class AuthServiceImpl implements AuthService {
 
         }
 
+    }
+
+    @Transactional
+    @Modifying
+    @Override
+    public String updateInfo(UpdateInfoReqDTO updateInfoReqDTO, String email) {
+        System.out.println(updateInfoReqDTO);
+        Customer customer = customerRepository.findByEmail(email);
+        String password = updateInfoReqDTO.getPassword();
+        String phone = updateInfoReqDTO.getPhone();
+
+        if (password == null || password.isBlank()) {
+            password = customer.getPassword();
+        }
+
+        if (phone == null || phone.isBlank()) {
+            phone = customer.getPhone();
+        }
+
+        if (password.length() < 20) {
+            password = encodingPassword(password);
+        }
+
+        Integer result = customerRepository.updateInfo(password, phone, email);
+
+        if (result > 0) {
+            return "success";
+        } else {
+            return "false";
+        }
     }
 
 
