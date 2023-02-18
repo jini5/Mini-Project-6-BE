@@ -78,7 +78,7 @@ public class LoanController {
         return service.selectByKeyword(keyword, pageable);
     }
 
-    @GetMapping("/finance/loan/detail/snq")
+    @GetMapping("/finance/loan/detail")
     public HashMap<String, Object> selectLoanDetail(@RequestParam(name = "snq") Long snq){
         return service.selectLoanDetail(snq);
     }
