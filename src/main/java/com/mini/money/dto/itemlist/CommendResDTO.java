@@ -12,9 +12,9 @@ import lombok.*;
 public class CommendResDTO {
     private Long snq;
     private String loanName;
-    private String loanLimit;
-    private String provider;
+    private String loanDescription;
     private String[] loanTarget;
-    private String area;
+    private String baseRate;
     private String rate;
+    private String area;
 }
