@@ -38,9 +38,9 @@ public class LoanServiceImpl implements LoanService {
                 .map(res -> new LoanResDTO(Loan.builder()
                         .snq(res.getSnq())
                         .loanName(res.getLoanName())
-                        .loanDescription(res.getLoanDescription())
+                        .loanLimit(res.getLoanLimit())
+                        .provider(res.getProvider())
                         .loanTarget(res.getLoanTarget())
-                        .baseRate(res.getBaseRate())
                         .rate(res.getRate())
                         .build()))
                 .collect(Collectors.toList());
