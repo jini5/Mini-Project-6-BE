@@ -3,7 +3,10 @@ package com.mini.money.repository;
 import com.mini.money.entity.Customer;
 import com.mini.money.entity.Favor;
 import com.mini.money.entity.Loan;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -14,4 +17,7 @@ public interface FavorRepository extends JpaRepository<Favor, Long> {
     void deleteByCustomerAndLoan(Customer customer, Loan loan);
 
     List<Favor> findAllByCustomer(Customer customer);
+
+    @Query(value = "select f.loan from Favor f group by f.loan order by count(f.loan) desc")
+    Page<Loan> findPopularData(Pageable pageable);
 }
