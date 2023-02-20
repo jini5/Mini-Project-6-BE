@@ -3,9 +3,7 @@ package com.mini.money.controller;
 import com.mini.money.dto.CustomerDetailReqDTO;
 import com.mini.money.dto.LogInReqDTO;
 import com.mini.money.dto.myinfo.MyCustomerDetailInfoResDTO;
-import com.mini.money.entity.Customer;
-import com.mini.money.repository.CustomerDetailRepository;
-import com.mini.money.service.CustomerDetailService;
+import com.mini.money.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,12 +17,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class CustomerDetailController {
 
-    private final CustomerDetailService customerDetailService;
+    private final AuthService authService;
 
     @PostMapping("/signup/detail")
     public ResponseEntity<String> customerDetailInfo(@RequestBody CustomerDetailReqDTO reqDTO, @AuthenticationPrincipal LogInReqDTO customer) {
         String email = customer.getEmail();
-        String message = customerDetailService.customerDetailInfo(email, reqDTO);
+        String message = authService.customerDetailInfo(email, reqDTO);
 
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
@@ -32,7 +30,7 @@ public class CustomerDetailController {
     @GetMapping("/mypage/detail/info")
     public ResponseEntity<Object> findMyDetailInfo(@AuthenticationPrincipal LogInReqDTO customer) {
         String email = customer.getEmail();
-        MyCustomerDetailInfoResDTO my = customerDetailService.findMyDetailInfo(email);
+        MyCustomerDetailInfoResDTO my = authService.findMyDetailInfo(email);
 
         if (my == null) {
             return new ResponseEntity<>("failed", HttpStatus.FOUND);

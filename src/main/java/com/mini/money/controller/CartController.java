@@ -1,7 +1,6 @@
 package com.mini.money.controller;
 
 import com.mini.money.dto.LogInReqDTO;
-import com.mini.money.entity.Customer;
 import com.mini.money.service.CartService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;

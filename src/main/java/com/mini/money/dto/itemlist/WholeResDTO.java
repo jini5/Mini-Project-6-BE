@@ -1,6 +1,5 @@
 package com.mini.money.dto.itemlist;
 
-import com.mini.money.entity.Favor;
 import com.mini.money.entity.Loan;
 import lombok.*;
 

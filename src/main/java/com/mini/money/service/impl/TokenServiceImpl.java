@@ -1,6 +1,5 @@
 package com.mini.money.service.impl;
 
-
 import com.mini.money.entity.Blacklist;
 import com.mini.money.repository.TokenRepository;
 import com.mini.money.service.TokenService;
