@@ -10,7 +10,4 @@ public interface CartService {
 
     String deleteProduct(String email, Long snq);
 
-    List<LoanResDTO> selectCartList(String email);
-
-
 }
