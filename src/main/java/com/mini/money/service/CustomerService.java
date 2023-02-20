@@ -7,6 +7,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Service
 @RequiredArgsConstructor
 public class CustomerService {
@@ -22,11 +25,13 @@ public class CustomerService {
         return my;
     }
 
-    public String checkPassword(String email, String requestPassword) {
+    public Map<String, String> checkPassword(String email, String requestPassword) {
         Customer customer = customerRepository.findByEmail(email);
+        Map<String, String> customerData = new HashMap<>();
         if (!passwordEncoder.matches(requestPassword, customer.getPassword())) {
             throw new IllegalArgumentException();
         }
-        return customer.getName();
+        customerData.put("name", customer.getName());
+        return customerData;
     }
 }
