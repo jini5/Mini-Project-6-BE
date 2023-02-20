@@ -11,8 +11,8 @@ import lombok.*;
 public class WholeResDTO {
     private Long snq;
     private String loanName;
-    private String loanLimit;
-    private String provider;
+    private String loanDescription;
     private String[] loanTarget;
+    private String baseRate;
     private String rate;
 }

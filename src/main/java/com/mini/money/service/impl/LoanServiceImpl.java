@@ -60,7 +60,7 @@ public class LoanServiceImpl implements LoanService {
             Loan loan = selectAll.getContent().get(i);
             String[] targetList = loan.getLoanTarget().split(",");
             WholeResDTO wholeResDTO = new WholeResDTO(loan.getSnq(), loan.getLoanName(),
-                    loan.getLoanLimit(), loan.getProvider(), targetList, loan.getRate());
+                    loan.getLoanDescription(), targetList, loan.getBaseRate(), loan.getRate());
 
             wholeList.add(wholeResDTO);
         }
@@ -247,7 +247,7 @@ public class LoanServiceImpl implements LoanService {
             String[] targetList = loan.getLoanTarget().split(",");
 
             WholeResDTO wholeResDTO = new WholeResDTO(loan.getSnq(), loan.getLoanName(),
-                    loan.getLoanLimit(), loan.getProvider(), targetList, loan.getRate());
+                    loan.getLoanDescription(), targetList, loan.getBaseRate(), loan.getRate());
 
             wholeList.add(wholeResDTO);
         }
@@ -262,7 +262,7 @@ public class LoanServiceImpl implements LoanService {
             String[] targetList = loan.getLoanTarget().split(",");
 
             CommendResDTO commendResDTO = new CommendResDTO(loan.getSnq(), loan.getLoanName(),
-                    loan.getLoanLimit(), loan.getProvider(), targetList, loan.getArea(), loan.getRate());
+                    loan.getLoanDescription(), targetList, loan.getBaseRate(), loan.getRate(), loan.getArea());
 
             commendList.add(commendResDTO);
         }
