@@ -6,8 +6,10 @@ import com.mini.money.dto.LogInReqDTO;
 import com.mini.money.dto.itemlist.CommendResDTO;
 import com.mini.money.dto.itemlist.WholeResDTO;
 import com.mini.money.parameter.*;
+import com.mini.money.service.FavorService;
 import com.mini.money.service.LoanService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +24,7 @@ import java.util.List;
 public class LoanController {
 
     private final LoanService service;
+    private final FavorService favorService;
 
     @GetMapping("/finance/loan")
     public List<LoanResDTO> selectLoanList() {
@@ -79,12 +82,17 @@ public class LoanController {
     }
 
     @GetMapping("/finance/loan/detail")
-    public HashMap<String, Object> selectLoanDetail(@RequestParam(name = "snq") Long snq){
+    public HashMap<String, Object> selectLoanDetail(@RequestParam(name = "snq") Long snq) {
         return service.selectLoanDetail(snq);
     }
-        
+
     @GetMapping("/finance/member/recommend/loan")
     public List<CommendResDTO> memberRecommendList(@AuthenticationPrincipal LogInReqDTO logInReqDTO) {
         return service.memberCommendLoanList(logInReqDTO);
+    }
+
+    @GetMapping("/finance/recommend/loan")
+    public Page<WholeResDTO> recommendDatas() {
+        return favorService.popularList();
     }
 }
