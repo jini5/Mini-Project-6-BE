@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -54,6 +55,22 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public List<LoanResDTO> selectCartList(String email) {
-        return null;
+        Customer customer = customerRepo.findByEmail(email);
+        List<Cart> carts = cartRepo.findAllByCustomer(customer);
+        List<LoanResDTO> list = new ArrayList<>();
+        for (int i = 0; i <carts.size() ; i++) {
+            Loan loan = carts.get(i).getLoan();
+
+            LoanResDTO loanResDTO = new LoanResDTO(
+                    loan.getSnq(),
+                    loan.getLoanName(),
+                    loan.getRate(),
+                    loan.getProvider(),
+                    loan.getLoanLimit(),
+                    loan.getLoanTarget()
+            );
+            list.add(loanResDTO);
+        }
+        return list;
     }
 }
