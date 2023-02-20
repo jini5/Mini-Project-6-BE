@@ -13,6 +13,8 @@ import javax.persistence.Column;
 @NoArgsConstructor
 public class LoanProdInfoResDTO {
 
+    private String loanName; //상품 이름
+
     private String usge; // 용도
 
     private String loanLimit; // 대출한도
@@ -32,6 +34,7 @@ public class LoanProdInfoResDTO {
 
 
     public LoanProdInfoResDTO(Loan loan) {
+        this.loanName = loan.getLoanName();
         this.usge = loan.getUsge();
         this.loanLimit = loan.getLoanLimit();
         this.rate = loan.getRate();
