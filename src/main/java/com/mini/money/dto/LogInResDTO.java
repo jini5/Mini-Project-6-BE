@@ -17,7 +17,6 @@ public class LogInResDTO {
     private String email;
     private String name;
     private String token;
-
     private String message;
 
     public LogInResDTO(Customer customer, String token){

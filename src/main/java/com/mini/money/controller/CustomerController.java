@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -27,7 +28,7 @@ public class CustomerController {
     private final TokenService tokenService;
 
     @GetMapping("/mypage/info")
-    @ApiOperation(value = "회원정보 확인", notes = "회원 정보를 확인 가능하다.")
+    @ApiOperation(value = "회원정보 확인", notes = "회원 정보를 확인 기능")
     public ResponseEntity<MyCustomerInfoResDTO> findMyInfo(@AuthenticationPrincipal LogInReqDTO customer) {
         String email = customer.getEmail();
         MyCustomerInfoResDTO myCustomerInfoResDTO = authService.findMyInfo(email);
@@ -49,7 +50,7 @@ public class CustomerController {
 
     @PostMapping("/logout")
     @ApiOperation(value = "로그아웃", notes = "로그인 토큰을 블랙리스트 테이블에 저장한다.")
-    public String logOut(@RequestHeader(name = "Authorization") String token) {
+    public String logOut(@ApiIgnore @RequestHeader(name = "Authorization") String token) {
         tokenService.logout(token);
         return "success";
     }
@@ -63,7 +64,7 @@ public class CustomerController {
     }
 
     @PostMapping("/mypage/check")
-    @ApiOperation(value = "비밀번호 확인", notes = "수정 페이지로 넘어가기 위한 비밀번호 확인 가능하다.")
+    @ApiOperation(value = "비밀번호 확인", notes = "비밀번호 확인 기능")
     public Map<String, String> checkPassword(@AuthenticationPrincipal LogInReqDTO logInReqDTO, @RequestBody HashMap<String, Object> map){
         return authService.checkPassword(logInReqDTO.getEmail(), map.get("password").toString());
     }
