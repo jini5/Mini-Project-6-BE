@@ -52,4 +52,9 @@ public class CustomerController {
         String message = authService.updateInfo(updateInfoReqDTO, email);
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
+
+    @PostMapping("/mypage/check")
+    public String checkPassword(@AuthenticationPrincipal LogInReqDTO logInReqDTO, String password){
+        return customerService.checkPassword(logInReqDTO.getEmail(), password);
+    }
 }
