@@ -107,4 +107,13 @@ public class LoanResDTO {
         this.maturity = loan.getMaturity();
         this.loanType = loan.getLoanType();
     }
+
+    public LoanResDTO(Long snq, String loanName, String rate, String provider, String loanLimit, String loanTarget) {
+        this.snq = snq;
+        this.loanName = loanName;
+        this.rate = rate;
+        this.provider = provider;
+        this.loanLimit = loanLimit;
+        this.loanTarget = loanTarget.split(",");
+    }
 }

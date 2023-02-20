@@ -1,6 +1,7 @@
 package com.mini.money.service.impl;
 
 
+import com.mini.money.dto.LoanResDTO;
 import com.mini.money.dto.cart.CartReqDTO;
 import com.mini.money.entity.Cart;
 import com.mini.money.entity.Customer;
@@ -12,6 +13,8 @@ import com.mini.money.service.CartService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -47,5 +50,10 @@ public class CartServiceImpl implements CartService {
             return "failed";
         }
         return "success";
+    }
+
+    @Override
+    public List<LoanResDTO> selectCartList(String email) {
+        return null;
     }
 }

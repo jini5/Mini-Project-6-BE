@@ -1,5 +1,6 @@
 package com.mini.money.service.impl;
 
+import com.mini.money.dto.LoanResDTO;
 import com.mini.money.dto.favor.FavorReqDTO;
 import com.mini.money.entity.Customer;
 import com.mini.money.entity.Favor;
@@ -12,6 +13,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class FavorServiceImpl implements FavorService {
@@ -21,6 +25,7 @@ public class FavorServiceImpl implements FavorService {
     private final CustomerRepository customerRepo;
 
     private final LoanRepository loanRepo;
+
 
 
     @Override
@@ -49,5 +54,26 @@ public class FavorServiceImpl implements FavorService {
             return "failed";
         }
         return "success";
+    }
+
+    @Override
+    public List<LoanResDTO> selectFavorList(String email) {
+        Customer customer = customerRepo.findByEmail(email);
+        List<Favor> testss = favorRepo.findAllByCustomer(customer);
+        List<LoanResDTO> list = new ArrayList<>();
+        for (int i = 0; i < testss.size(); i++) {
+            Loan loan = testss.get(i).getLoan();
+
+            LoanResDTO loanResDTO = new LoanResDTO(
+                    loan.getSnq(),
+                    loan.getLoanName(),
+                    loan.getRate(),
+                    loan.getProvider(),
+                    loan.getLoanLimit(),
+                    loan.getLoanTarget()
+            );
+            list.add(loanResDTO);
+        }
+        return list;
     }
 }
