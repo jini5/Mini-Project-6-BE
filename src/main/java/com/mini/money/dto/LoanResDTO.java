@@ -31,7 +31,7 @@ public class LoanResDTO {
 
     private String usge; // 용도
 
-    private String loanTarget; // 대상
+    private String[] loanTarget; // 대상
 
     private String divisionOffice; // 기관구분
 
@@ -85,7 +85,7 @@ public class LoanResDTO {
         this.repayPeriod = loan.getRepayPeriod();
         this.repayMethod = loan.getRepayMethod();
         this.usge = loan.getUsge();
-        this.loanTarget = loan.getLoanTarget();
+        this.loanTarget = loan.getLoanTarget().split(",");
         this.divisionOffice = loan.getDivisionOffice();
         this.provider = loan.getProvider();
         this.area = loan.getArea();
@@ -106,5 +106,14 @@ public class LoanResDTO {
         this.loanClassification = loan.getLoanClassification();
         this.maturity = loan.getMaturity();
         this.loanType = loan.getLoanType();
+    }
+
+    public LoanResDTO(Long snq, String loanName, String rate, String provider, String loanLimit, String loanTarget) {
+        this.snq = snq;
+        this.loanName = loanName;
+        this.rate = rate;
+        this.provider = provider;
+        this.loanLimit = loanLimit;
+        this.loanTarget = loanTarget.split(",");
     }
 }
