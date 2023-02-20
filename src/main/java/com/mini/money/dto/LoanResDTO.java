@@ -1,4 +1,5 @@
 package com.mini.money.dto;
+
 import com.mini.money.entity.Loan;
 import lombok.*;
 

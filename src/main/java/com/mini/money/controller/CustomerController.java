@@ -6,7 +6,6 @@ import com.mini.money.dto.LogInResDTO;
 import com.mini.money.dto.myinfo.MyCustomerInfoResDTO;
 import com.mini.money.dto.myinfo.UpdateInfoReqDTO;
 import com.mini.money.service.AuthService;
-import com.mini.money.service.CustomerService;
 import com.mini.money.service.TokenService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,14 +20,13 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class CustomerController {
 
-    private final CustomerService customerService;
     private final AuthService authService;
     private final TokenService tokenService;
 
     @GetMapping("/mypage/info")
     public ResponseEntity<MyCustomerInfoResDTO> findMyInfo(@AuthenticationPrincipal LogInReqDTO customer) {
         String email = customer.getEmail();
-        MyCustomerInfoResDTO myCustomerInfoResDTO = customerService.findMyInfo(email);
+        MyCustomerInfoResDTO myCustomerInfoResDTO = authService.findMyInfo(email);
 
         return new ResponseEntity<>(myCustomerInfoResDTO, HttpStatus.OK);
     }
@@ -58,6 +56,6 @@ public class CustomerController {
 
     @PostMapping("/mypage/check")
     public Map<String, String> checkPassword(@AuthenticationPrincipal LogInReqDTO logInReqDTO, @RequestBody HashMap<String, Object> map){
-        return customerService.checkPassword(logInReqDTO.getEmail(), map.get("password").toString());
+        return authService.checkPassword(logInReqDTO.getEmail(), map.get("password").toString());
     }
 }

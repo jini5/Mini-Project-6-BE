@@ -1,11 +1,16 @@
 package com.mini.money.service.impl;
 
+import com.mini.money.dto.CustomerDetailReqDTO;
 import com.mini.money.dto.CustomerReqDTO;
 import com.mini.money.dto.LogInReqDTO;
 import com.mini.money.dto.LogInResDTO;
+import com.mini.money.dto.myinfo.MyCustomerDetailInfoResDTO;
+import com.mini.money.dto.myinfo.MyCustomerInfoResDTO;
 import com.mini.money.dto.myinfo.UpdateInfoReqDTO;
 import com.mini.money.entity.Customer;
+import com.mini.money.entity.CustomerDetail;
 import com.mini.money.jwt.JwtProvider;
+import com.mini.money.repository.CustomerDetailRepository;
 import com.mini.money.repository.CustomerRepository;
 import com.mini.money.service.AuthService;
 import lombok.RequiredArgsConstructor;
@@ -14,10 +19,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Service
 @RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService {
     private final CustomerRepository customerRepository;
+    private final CustomerDetailRepository customerDetailRepository;
     private final JwtProvider jwtProvider;
     private final PasswordEncoder passwordEncoder;
     public static final String pattern = "^[A-Za-z[0-9]]{8,12}$"; // 영문, 숫자 8~12자리
@@ -102,6 +111,53 @@ public class AuthServiceImpl implements AuthService {
         } else {
             return "false";
         }
+    }
+
+    @Override
+    public Map<String, String> checkPassword(String email, String requestPassword) {
+        Customer customer = customerRepository.findByEmail(email);
+        Map<String, String> customerData = new HashMap<>();
+        if (!passwordEncoder.matches(requestPassword, customer.getPassword())) {
+            throw new IllegalArgumentException();
+        }
+        customerData.put("name", customer.getName());
+        return customerData;
+    }
+
+    @Override
+    public MyCustomerInfoResDTO findMyInfo(String email) {
+        Customer customer = customerRepository.findByEmail(email);
+        MyCustomerInfoResDTO my = new MyCustomerInfoResDTO(
+                customer.getEmail(), customer.getName(), customer.getPhone()
+        );
+        return my;
+    }
+
+    @Override
+    public MyCustomerDetailInfoResDTO findMyDetailInfo(String email) {
+        try {
+            Customer loginCustomer = customerRepository.findByEmail(email);
+            CustomerDetail customerDetail = customerDetailRepository.findByCustomer(loginCustomer).orElseThrow(() -> new IllegalStateException("추가 정보 등록 요망"));
+
+            MyCustomerDetailInfoResDTO my = new MyCustomerDetailInfoResDTO(
+                    customerDetail.getAge(), customerDetail.getAddress(), customerDetail.getJob(),
+                    customerDetail.getBank(), customerDetail.getCrdtGrade(), customerDetail.getIncome()
+            );
+
+            return my;
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public String customerDetailInfo(String email, CustomerDetailReqDTO reqDTO) {
+        Customer loginCustomer = customerRepository.findByEmail(email);
+        CustomerDetail customerDetail = reqDTO.toEntity(loginCustomer);
+        customerDetailRepository.save(customerDetail);
+
+        return "success";
     }
 
 
