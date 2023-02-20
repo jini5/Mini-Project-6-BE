@@ -2,6 +2,7 @@ package com.mini.money.dto;
 
 import com.mini.money.entity.Customer;
 import io.jsonwebtoken.Claims;
+import io.swagger.annotations.ApiModel;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -15,6 +16,7 @@ import java.util.Collections;
 @Setter
 @ToString
 @Builder
+@ApiModel(value = "로그인")
 public class LogInReqDTO {
 
     private String email;

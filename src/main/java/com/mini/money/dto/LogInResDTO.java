@@ -2,6 +2,7 @@ package com.mini.money.dto;
 
 
 import com.mini.money.entity.Customer;
+import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,6 +12,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@ApiModel(value = "로그인 후 토큰 출력")
 public class LogInResDTO {
     private String email;
     private String name;

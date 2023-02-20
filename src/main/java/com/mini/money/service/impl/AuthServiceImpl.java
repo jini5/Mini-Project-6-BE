@@ -49,11 +49,7 @@ public class AuthServiceImpl implements AuthService {
             signupReqDTO.setPassword(password);
 
             Customer customer = signupReqDTO.toEntity();
-
-            System.out.println(customer.toString());
-
-            customer =customerRepository.save(customer);
-            System.out.println(customer.toString());
+            customerRepository.save(customer);
             return "success";
         }
 
