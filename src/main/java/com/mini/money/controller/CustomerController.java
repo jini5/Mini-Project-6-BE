@@ -14,6 +14,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+
 @RestController
 @RequiredArgsConstructor
 public class CustomerController {
@@ -54,7 +56,7 @@ public class CustomerController {
     }
 
     @PostMapping("/mypage/check")
-    public String checkPassword(@AuthenticationPrincipal LogInReqDTO logInReqDTO, String password){
-        return customerService.checkPassword(logInReqDTO.getEmail(), password);
+    public String checkPassword(@AuthenticationPrincipal LogInReqDTO logInReqDTO, HashMap<String, Object> map){
+        return customerService.checkPassword(logInReqDTO.getEmail(), map.get("password").toString());
     }
 }
