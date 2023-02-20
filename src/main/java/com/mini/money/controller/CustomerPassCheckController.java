@@ -1,6 +1,7 @@
 package com.mini.money.controller;
 
 
+import com.mini.money.dto.LogInReqDTO;
 import com.mini.money.dto.myinfo.MyCustomerInfoResDTO;
 import com.mini.money.service.impl.CustomerPassCheckServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -14,8 +15,7 @@ public class CustomerPassCheckController {
     CustomerPassCheckServiceImpl customerPassCheckService;
 
     @PostMapping("/mypage/check")
-        public String checkPassword(@AuthenticationPrincipal MyCustomerInfoResDTO customerInfoResDTO, String password){
-            customerPassCheckService.checkPassword(customerInfoResDTO.getPassword(), password);
-            return customerInfoResDTO.getName();
+        public String checkPassword(@AuthenticationPrincipal LogInReqDTO logInReqDTO, String password){
+            return customerPassCheckService.checkPassword(password, logInReqDTO.getEmail());
         }
 }
