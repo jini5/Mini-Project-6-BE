@@ -15,6 +15,8 @@ import com.mini.money.repository.CustomerRepository;
 import com.mini.money.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,7 +35,7 @@ public class AuthServiceImpl implements AuthService {
 
 
     @Override
-    public String signup(CustomerReqDTO signupReqDTO) {
+    public ResponseEntity signup(CustomerReqDTO signupReqDTO) {
 
         Customer checkCustomer = null;
         try {
@@ -41,16 +43,19 @@ public class AuthServiceImpl implements AuthService {
         }catch (Exception e){
         }
         if (checkCustomer!=null){
-            return signupReqDTO.getEmail() + "는 이미 존재하는 이메일 입니다. \n다른 이메일을 사용해주세요";
+            String str = signupReqDTO.getEmail() + "는 이미 존재하는 이메일 입니다. 다른 이메일을 사용해주세요";
+            System.out.println(str);
+            return new ResponseEntity(str,  HttpStatus.BAD_REQUEST);
         }else if(!signupReqDTO.getPassword().matches(pattern)) {
-            return "비밀번호는 문자,숫자만 사용가능합니다. \n8~12자리로 설정해주세요";
+            String str = "비밀번호는 문자,숫자만 사용가능합니다. \n8~12자리로 설정해주세요";
+            return new ResponseEntity(str,  HttpStatus.BAD_REQUEST);
         }else{
             String password = encodingPassword(signupReqDTO.getPassword());
             signupReqDTO.setPassword(password);
 
             Customer customer = signupReqDTO.toEntity();
             customerRepository.save(customer);
-            return "success";
+            return new ResponseEntity(HttpStatus.OK);
         }
 
     }

@@ -7,11 +7,12 @@ import com.mini.money.dto.LogInResDTO;
 import com.mini.money.dto.myinfo.MyCustomerDetailInfoResDTO;
 import com.mini.money.dto.myinfo.MyCustomerInfoResDTO;
 import com.mini.money.dto.myinfo.UpdateInfoReqDTO;
+import org.springframework.http.ResponseEntity;
 
 import java.util.Map;
 
 public interface AuthService {
-    String signup(CustomerReqDTO signupReqDTO);
+    ResponseEntity signup(CustomerReqDTO signupReqDTO);
 
     LogInResDTO login(LogInReqDTO logInReqDTO);
 

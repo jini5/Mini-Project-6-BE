@@ -38,7 +38,7 @@ public class CustomerController {
 
     @PostMapping("/signup")
     @ApiOperation(value = "회원가입", notes = "필수 정보를 입력받아 회원가입 시도, 성공 시 DB에 저장한다.")
-    public String signUp(@RequestBody CustomerReqDTO signupReqDTO) {
+    public ResponseEntity signUp(@RequestBody CustomerReqDTO signupReqDTO) {
         return authService.signup(signupReqDTO);
     }
 
