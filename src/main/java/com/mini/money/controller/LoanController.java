@@ -40,47 +40,47 @@ public class LoanController {
     }
 
     @GetMapping("/finance/itemlist/office")
-    public List<WholeResDTO> selectByOffice(@RequestParam(name = "office") Office office, Pageable pageable) {
+    public Page<WholeResDTO> selectByOffice(@RequestParam(name = "office") Office office, Pageable pageable) {
         return service.selectByOffice(office, pageable);
     }
 
     @GetMapping("/finance/itemlist/area")
-    public List<WholeResDTO> selectByArea(@RequestParam(name = "area") Area area, Pageable pageable) {
+    public Page<WholeResDTO> selectByArea(@RequestParam(name = "area") Area area, Pageable pageable) {
         return service.selectByArea(area, pageable);
     }
 
     @GetMapping("/finance/itemlist/repayment")
-    public List<WholeResDTO> selectByRepayment(@RequestParam(name = "repayment") Repayment repayment, Pageable pageable) {
+    public Page<WholeResDTO> selectByRepayment(@RequestParam(name = "repayment") Repayment repayment, Pageable pageable) {
         return service.selectByRepayment(repayment, pageable);
     }
 
     @GetMapping("/finance/itemlist/usge")
-    public List<WholeResDTO> selectByUsge(@RequestParam(name = "usge") Usge usge, Pageable pageable) {
+    public Page<WholeResDTO> selectByUsge(@RequestParam(name = "usge") Usge usge, Pageable pageable) {
         return service.selectByUsge(usge, pageable);
     }
 
     @GetMapping("/finance/itemlist/target")
-    public List<WholeResDTO> selectByTarget(@RequestParam(name = "target") Target target, Pageable pageable) {
+    public Page<WholeResDTO> selectByTarget(@RequestParam(name = "target") Target target, Pageable pageable) {
         return service.selectByTarget(target, pageable);
     }
 
     @GetMapping("/finance/itemlist/baseRate")
-    public List<WholeResDTO> selectByBaseRate(@RequestParam(name = "baseRate") BaseRate baseRate, Pageable pageable) {
+    public Page<WholeResDTO> selectByBaseRate(@RequestParam(name = "baseRate") BaseRate baseRate, Pageable pageable) {
         return service.selectByBaseRate(baseRate, pageable);
     }
 
     @GetMapping("/finance/itemlist/maturity")
-    public List<WholeResDTO> selectByMaturity(@RequestParam(name = "maturity") String maturity, Pageable pageable) {
+    public Page<WholeResDTO> selectByMaturity(@RequestParam(name = "maturity") String maturity, Pageable pageable) {
         return service.selectByMaturity(maturity, pageable);
     }
 
     @GetMapping("/finance/itemlist/credit")
-    public List<WholeResDTO> selectByCredit(@RequestParam(name = "credit") String credit, Pageable pageable) {
+    public Page<WholeResDTO> selectByCredit(@RequestParam(name = "credit") String credit, Pageable pageable) {
         return service.selectByCredit(credit, pageable);
     }
 
     @GetMapping("/finance/itemlist/keyword")
-    public List<WholeResDTO> selectByKeyword(@RequestParam(name = "keyword") String keyword, Pageable pageable) {
+    public Page<WholeResDTO> selectByKeyword(@RequestParam(name = "keyword") String keyword, Pageable pageable) {
         return service.selectByKeyword(keyword, pageable);
     }
 

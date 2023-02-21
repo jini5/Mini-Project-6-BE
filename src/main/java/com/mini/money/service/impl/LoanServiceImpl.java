@@ -68,12 +68,12 @@ public class LoanServiceImpl implements LoanService {
     }
 
     @Override
-    public List<WholeResDTO> selectByOffice(Office office, Pageable pageable) {
+    public Page<WholeResDTO> selectByOffice(Office office, Pageable pageable) {
         Office[] os = Office.values();
         List<String> officeList = Arrays.stream(os).map(Objects::toString).collect(Collectors.toList());
         officeList.remove("기타");
 
-        List<Loan> selectAllByOffice;
+        Page<Loan> selectAllByOffice;
 
         if (office.name().equals("기타")) {
             selectAllByOffice = repository.findAllByDivisionOfficeNotIn(officeList, pageable);
@@ -84,13 +84,14 @@ public class LoanServiceImpl implements LoanService {
         return getWholeResDTOS(selectAllByOffice);
     }
 
+
     @Override
-    public List<WholeResDTO> selectByArea(Area area, Pageable pageable) {
+    public Page<WholeResDTO> selectByArea(Area area, Pageable pageable) {
         Area[] ar = Area.values();
         List<String> areaList = Arrays.stream(ar).map(Objects::toString).collect(Collectors.toList());
         areaList.remove("기타");
 
-        List<Loan> selectAllByArea;
+        Page<Loan> selectAllByArea;
 
         if (area.name().equals("기타")) {
             selectAllByArea = repository.findAllByAreaNotIn(areaList, pageable);
@@ -102,12 +103,12 @@ public class LoanServiceImpl implements LoanService {
     }
 
     @Override
-    public List<WholeResDTO> selectByRepayment(Repayment repayment, Pageable pageable) {
+    public Page<WholeResDTO> selectByRepayment(Repayment repayment, Pageable pageable) {
         Repayment[] rm = Repayment.values();
         List<String> repayList = Arrays.stream(rm).map(Objects::toString).collect(Collectors.toList());
         repayList.remove("기타");
 
-        List<Loan> selectAllByRepayment;
+        Page<Loan> selectAllByRepayment;
 
         if (repayment.name().equals("기타")) {
             selectAllByRepayment = repository.findAllByRepayMethodNotIn(repayList, pageable);
@@ -119,12 +120,12 @@ public class LoanServiceImpl implements LoanService {
     }
 
     @Override
-    public List<WholeResDTO> selectByUsge(Usge usge, Pageable pageable) {
+    public Page<WholeResDTO> selectByUsge(Usge usge, Pageable pageable) {
         Usge[] us = Usge.values();
         List<String> usgeList = Arrays.stream(us).map(Objects::toString).collect(Collectors.toList());
         usgeList.remove("기타");
 
-        List<Loan> selectAllByUsge;
+        Page<Loan> selectAllByUsge;
 
         if (usge.name().equals("기타")) {
             selectAllByUsge = repository.findAllByUsgeNotIn(usgeList, pageable);
@@ -136,12 +137,12 @@ public class LoanServiceImpl implements LoanService {
     }
 
     @Override
-    public List<WholeResDTO> selectByTarget(Target target, Pageable pageable) {
+    public Page<WholeResDTO> selectByTarget(Target target, Pageable pageable) {
         Target[] tr = Target.values();
         List<String> targetList = Arrays.stream(tr).map(Objects::toString).collect(Collectors.toList());
         targetList.remove("기타");
 
-        List<Loan> selectAllByTarget;
+        Page<Loan> selectAllByTarget;
 
         if (target.name().equals("기타")) {
             selectAllByTarget = repository.findAllByLoanTargetNotIn(targetList, pageable);
@@ -153,12 +154,13 @@ public class LoanServiceImpl implements LoanService {
     }
 
     @Override
-    public List<WholeResDTO> selectByBaseRate(BaseRate baseRate, Pageable pageable) {
+    public Page<WholeResDTO> selectByBaseRate(BaseRate baseRate, Pageable pageable) {
         BaseRate[] br = BaseRate.values();
         List<String> baseRateList = Arrays.stream(br).map(Objects::toString).collect(Collectors.toList());
         baseRateList.remove("기타");
 
-        List<Loan> selectAllByBaseRate;
+
+        Page<Loan> selectAllByBaseRate;
 
         if (baseRate.name().equals("기타")) {
             selectAllByBaseRate = repository.findAllByBaseRateNotIn(baseRateList, pageable);
@@ -170,8 +172,8 @@ public class LoanServiceImpl implements LoanService {
     }
 
     @Override
-    public List<WholeResDTO> selectByMaturity(String maturity, Pageable pageable) {
-        List<Loan> selectAllByMaturity;
+    public Page<WholeResDTO> selectByMaturity(String maturity, Pageable pageable) {
+        Page<Loan> selectAllByMaturity;
 
         String filter = "상시";
 
@@ -185,8 +187,8 @@ public class LoanServiceImpl implements LoanService {
     }
 
     @Override
-    public List<WholeResDTO> selectByCredit(String credit, Pageable pageable) {
-        List<Loan> selectAllByCredit;
+    public Page<WholeResDTO> selectByCredit(String credit, Pageable pageable) {
+        Page<Loan> selectAllByCredit;
 
         String filter = "없음";
 
@@ -200,8 +202,8 @@ public class LoanServiceImpl implements LoanService {
     }
 
     @Override
-    public List<WholeResDTO> selectByKeyword(String keyword, Pageable pageable) {
-        List<Loan> selectAllByKeyword = repository.findAllByLoanNameContaining(keyword, pageable);
+    public Page<WholeResDTO> selectByKeyword(String keyword, Pageable pageable) {
+        Page<Loan> selectAllByKeyword = repository.findAllByLoanNameContaining(keyword, pageable);
 
         return getWholeResDTOS(selectAllByKeyword);
     }
@@ -239,18 +241,8 @@ public class LoanServiceImpl implements LoanService {
     }
 
 
-    private List<WholeResDTO> getWholeResDTOS(List<Loan> selectAllByArea) {
-        List<WholeResDTO> wholeList = new ArrayList<>();
-
-        for (int i = 0; i < selectAllByArea.size(); i++) {
-            Loan loan = selectAllByArea.get(i);
-            String[] targetList = loan.getLoanTarget().split(",");
-
-            WholeResDTO wholeResDTO = new WholeResDTO(loan.getSnq(), loan.getLoanName(),
-                    loan.getLoanDescription(), targetList, loan.getBaseRate(), loan.getRate());
-
-            wholeList.add(wholeResDTO);
-        }
+    private Page<WholeResDTO> getWholeResDTOS(Page<Loan> selectData) {
+        Page<WholeResDTO> wholeList = selectData.map(loan -> new WholeResDTO(loan));
         return wholeList;
     }
 
