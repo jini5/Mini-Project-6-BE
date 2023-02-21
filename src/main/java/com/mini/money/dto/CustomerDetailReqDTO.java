@@ -2,6 +2,7 @@ package com.mini.money.dto;
 
 import com.mini.money.entity.Customer;
 import com.mini.money.entity.CustomerDetail;
+import io.swagger.annotations.ApiModel;
 import lombok.*;
 
 @Getter
@@ -10,6 +11,7 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 @ToString
+@ApiModel(value = "회원 추가 정보 입력")
 public class CustomerDetailReqDTO {
     private Integer age;
     private String address;

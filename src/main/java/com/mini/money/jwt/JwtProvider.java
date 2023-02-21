@@ -35,7 +35,7 @@ public class JwtProvider {
     }
 
     //토큰에서 userDTO로 바꿈, jwt필터에서 사용, 유효성검사 해야한다
-    public LogInReqDTO tokenToUser(String token){ // "Bearer sdmleeweawlek.ekwekwekewrkj.enwerkjwerknrwekn"
+    public LogInReqDTO tokenToUser(String token){
         Claims claims= null;
 
         if(token!=null) {

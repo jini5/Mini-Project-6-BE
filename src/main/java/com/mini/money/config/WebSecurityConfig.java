@@ -29,7 +29,8 @@ public class WebSecurityConfig {
 
   private static final String[] PUBLIC_URLS = { //이 URL은 권한 검사안함
           "**/signup", "**/login" , "**/logout", "/finance/loan", "/finance/recommend/loan",
-          "/finance/itemlist/**", "/finance/loan/detail"
+          "/finance/itemlist/**", "/finance/loan/detail", "/swagger-resources/**", "/swagger-ui.html","/swagger-ui/**",
+          "/v2/api-docs", "/webjars/**","/v3/api-docs**"
   };
 
   private final JwtProvider jwtProvider;

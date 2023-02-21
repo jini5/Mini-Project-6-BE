@@ -8,6 +8,8 @@ import com.mini.money.dto.itemlist.WholeResDTO;
 import com.mini.money.parameter.*;
 import com.mini.money.service.FavorService;
 import com.mini.money.service.LoanService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,6 +23,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@Api(tags = {"상품 서비스"}, description = "전체 상품 조회, 항목 별 상품 조회, 상품 추천")
 public class LoanController {
 
     private final LoanService service;
@@ -82,11 +85,13 @@ public class LoanController {
     }
 
     @GetMapping("/finance/loan/detail")
+    @ApiOperation(value = "상품 상세 정보 반환", notes = "상품 상세 정보를 반환")
     public HashMap<String, Object> selectLoanDetail(@RequestParam(name = "snq") Long snq) {
         return service.selectLoanDetail(snq);
     }
 
     @GetMapping("/finance/member/recommend/loan")
+    @ApiOperation(value = "(로그인 상태)상품 추천 리스트 반환", notes = "사용자 지역의 상품 리스트를 반환, 설정한 지역이 없다면 전국")
     public List<CommendResDTO> memberRecommendList(@AuthenticationPrincipal LogInReqDTO logInReqDTO) {
         return service.memberCommendLoanList(logInReqDTO);
     }

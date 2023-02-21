@@ -1,6 +1,7 @@
 package com.mini.money.dto;
 
 import com.mini.money.entity.Customer;
+import io.swagger.annotations.ApiModel;
 import lombok.*;
 
 @AllArgsConstructor
@@ -8,6 +9,7 @@ import lombok.*;
 @Getter
 @Setter
 @ToString
+@ApiModel(value = "회원 필수 정보 입력")
 public class CustomerReqDTO {
 
     private String email;

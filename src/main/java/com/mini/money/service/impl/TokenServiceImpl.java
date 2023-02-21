@@ -19,7 +19,6 @@ public class TokenServiceImpl implements TokenService{
             return null;
         }else{
             try{
-                System.out.println(token);
                 tokenRepository.save(Blacklist.builder().token(token).build());
                 return "success";
             }catch (Exception e){
@@ -30,7 +29,6 @@ public class TokenServiceImpl implements TokenService{
 
     @Override
     public boolean checkBlacklist(String token) {
-        System.out.println("checkBlacklist   "+token);
         return tokenRepository.existsByToken(token);
     }
 }
