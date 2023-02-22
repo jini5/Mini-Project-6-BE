@@ -17,6 +17,7 @@ import com.mini.money.repository.LoanRepository;
 import com.mini.money.service.LoanService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -227,6 +228,7 @@ public class LoanServiceImpl implements LoanService {
 
     @Override
     public List<CommendResDTO> memberCommendLoanList(LogInReqDTO logInReqDTO) {
+        Pageable page = PageRequest.of(0, 10);
         Customer customer = customerRepository.findByEmail(logInReqDTO.getEmail());
         String area = "전국";
         Optional<CustomerDetail> customerDetail = customerDetailRepository.findByCustomer(customer);
@@ -235,7 +237,8 @@ public class LoanServiceImpl implements LoanService {
                 area = customerDetail.get().getAddress();
             }
         }
-        List<Loan> CommendByArea =  repository.findAllByAreaContaining(area);
+
+        List<Loan> CommendByArea =  repository.findAllByAreaContaining(area,page);
 
         return getCommenResDTOS(CommendByArea);
     }
