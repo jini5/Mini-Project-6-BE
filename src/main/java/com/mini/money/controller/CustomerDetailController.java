@@ -3,6 +3,8 @@ package com.mini.money.controller;
 import com.mini.money.dto.CustomerDetailReqDTO;
 import com.mini.money.dto.LogInReqDTO;
 import com.mini.money.dto.myinfo.MyCustomerDetailInfoResDTO;
+import com.mini.money.dto.myinfo.UpdateDetailReqDTO;
+import com.mini.money.dto.myinfo.UpdateInfoReqDTO;
 import com.mini.money.service.AuthService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -10,10 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -30,6 +29,15 @@ public class CustomerDetailController {
 
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
+
+    @PutMapping("/mypage/member/detail")
+    @ApiOperation(value = "회원 상세 정보 수정", notes = "상세 정보 수정이 가능하다.")
+    public ResponseEntity<String> updateInfo(@RequestBody UpdateDetailReqDTO detail, @AuthenticationPrincipal LogInReqDTO customer) {
+        String email = customer.getEmail();
+        String message = authService.updateDetailInfo(detail, email);
+        return new ResponseEntity<>(message, HttpStatus.OK);
+    }
+
 
     @GetMapping("/mypage/detail/info")
     @ApiOperation(value = "회원 정보 조회", notes = "회원 정보를 확인한다.")
