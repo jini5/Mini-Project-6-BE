@@ -6,6 +6,7 @@ import com.mini.money.dto.LogInReqDTO;
 import com.mini.money.dto.LogInResDTO;
 import com.mini.money.dto.myinfo.MyCustomerDetailInfoResDTO;
 import com.mini.money.dto.myinfo.MyCustomerInfoResDTO;
+import com.mini.money.dto.myinfo.UpdateDetailReqDTO;
 import com.mini.money.dto.myinfo.UpdateInfoReqDTO;
 import com.mini.money.entity.Customer;
 import com.mini.money.entity.CustomerDetail;
@@ -159,6 +160,24 @@ public class AuthServiceImpl implements AuthService {
         customerDetailRepository.save(customerDetail);
 
         return "success";
+    }
+
+    @Transactional
+    @Modifying
+    @Override
+    public String updateDetailInfo(UpdateDetailReqDTO detailReqDTO, String email) {
+        Customer customer = customerRepository.findByEmail(email);
+        CustomerDetail detail = customerDetailRepository.findByCustomer(customer).orElse(null);
+        Integer result = customerDetailRepository.updateDetailInfo(
+                detailReqDTO.getAddress(),
+                detailReqDTO.getAge(),
+                detailReqDTO.getCrdtGrade(),
+                detailReqDTO.getJob(),
+                detailReqDTO.getIncome(),
+                detailReqDTO.getBank(),
+                detail.getId());
+
+        return result > 0? "success":"failed";
     }
 
 
