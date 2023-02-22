@@ -5,6 +5,7 @@ import com.mini.money.dto.LogInReqDTO;
 import com.mini.money.dto.itemlist.CommendResDTO;
 import com.mini.money.dto.itemlist.WholeResDTO;
 import com.mini.money.parameter.*;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 import java.util.HashMap;
