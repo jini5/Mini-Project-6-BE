@@ -1,8 +1,10 @@
 package com.mini.money.service;
 
+import org.springframework.http.ResponseEntity;
+
 public interface TokenService {
 
-    String logout(String header);
+    ResponseEntity logout(String header);
 
     boolean checkBlacklist(String token);
 
