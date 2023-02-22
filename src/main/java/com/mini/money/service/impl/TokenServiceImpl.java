@@ -4,6 +4,8 @@ import com.mini.money.entity.Blacklist;
 import com.mini.money.repository.TokenRepository;
 import com.mini.money.service.TokenService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -14,15 +16,18 @@ public class TokenServiceImpl implements TokenService{
 
 
     @Override
-    public String logout(String token) {
+    public ResponseEntity logout(String token) {
         if(checkBlacklist(token)){
-            return null;
+            String result = "failed";
+            return new ResponseEntity(result, HttpStatus.BAD_REQUEST);
         }else{
             try{
                 tokenRepository.save(Blacklist.builder().token(token).build());
-                return "success";
+                String result = "success";
+                return new ResponseEntity(result,HttpStatus.OK);
             }catch (Exception e){
-                return null;
+                String result = "failed";
+                return new ResponseEntity(result,HttpStatus.BAD_REQUEST);
             }
         }
     }
