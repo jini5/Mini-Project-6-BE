@@ -6,6 +6,7 @@ import com.mini.money.dto.LogInReqDTO;
 import com.mini.money.dto.LogInResDTO;
 import com.mini.money.dto.myinfo.MyCustomerDetailInfoResDTO;
 import com.mini.money.dto.myinfo.MyCustomerInfoResDTO;
+import com.mini.money.dto.myinfo.UpdateDetailReqDTO;
 import com.mini.money.dto.myinfo.UpdateInfoReqDTO;
 import org.springframework.http.ResponseEntity;
 
@@ -26,4 +27,5 @@ public interface AuthService {
 
     String customerDetailInfo(String email, CustomerDetailReqDTO reqDTO);
 
+    String updateDetailInfo(UpdateDetailReqDTO updateDetailReqDTO, String email);
 }
