@@ -50,9 +50,9 @@ public class CustomerController {
 
     @PostMapping("/logout")
     @ApiOperation(value = "로그아웃", notes = "로그인 토큰을 블랙리스트 테이블에 저장한다.")
-    public String logOut(@ApiIgnore @RequestHeader(name = "Authorization") String token) {
-        tokenService.logout(token);
-        return "success";
+    public ResponseEntity logOut(@ApiIgnore @RequestHeader(name = "Authorization") String token) {
+
+        return tokenService.logout(token);
     }
 
     @PutMapping("/mypage/member")
