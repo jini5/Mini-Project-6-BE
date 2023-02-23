@@ -35,6 +35,7 @@ public class AuthServiceImpl implements AuthService {
     public static final String pattern = "^[A-Za-z[0-9]]{8,16}$"; // 영문, 숫자 8~16자리
 
 
+    @Transactional
     @Override
     public ResponseEntity signup(CustomerReqDTO signupReqDTO) {
 
@@ -153,6 +154,7 @@ public class AuthServiceImpl implements AuthService {
         }
     }
 
+    @Transactional
     @Override
     public String customerDetailInfo(String email, CustomerDetailReqDTO reqDTO) {
         Customer loginCustomer = customerRepository.findByEmail(email);
