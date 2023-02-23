@@ -14,4 +14,9 @@ public interface CartRepository extends JpaRepository<Cart, Long> {
     void deleteByCustomerAndLoan(Customer customer, Loan loan);
 
     List<Cart> findAllByCustomer(Customer customer);
+
+    boolean existsByCustomerAndLoan(Customer customer, Loan loan);
+
+    Cart findFirstByCustomerOrderByIdAsc(Customer customer);
+
 }
