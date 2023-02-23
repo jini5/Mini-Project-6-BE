@@ -30,8 +30,13 @@ public class CartServiceImpl implements CartService {
         Loan loan = loanRepo.findBySnq(snq).orElse(null);
         Customer customer = customerRepo.findByEmail(email);
         try {
-            cartRepo.save(new CartReqDTO().toEntity(customer, loan));
-        }catch (Exception err) {
+            if (!cartRepo.existsByCustomerAndLoan(customer, loan)) {
+                deleteLastCart(snq, email);
+                cartRepo.save(new CartReqDTO().toEntity(customer, loan));
+            } else {
+                return "failed";
+            }
+        } catch (Exception err) {
             err.printStackTrace();
             return "failed";
         }
@@ -45,7 +50,7 @@ public class CartServiceImpl implements CartService {
             Customer customer = customerRepo.findByEmail(email);
             Loan loan = loanRepo.findBySnq(snq).orElse(null);
             cartRepo.deleteByCustomerAndLoan(customer, loan);
-        }catch (Exception err) {
+        } catch (Exception err) {
             err.printStackTrace();
             return "failed";
         }
@@ -57,7 +62,7 @@ public class CartServiceImpl implements CartService {
         Customer customer = customerRepo.findByEmail(email);
         List<Cart> carts = cartRepo.findAllByCustomer(customer);
         List<LoanResDTO> list = new ArrayList<>();
-        for (int i = 0; i <carts.size() ; i++) {
+        for (int i = 0; i < carts.size(); i++) {
             Loan loan = carts.get(i).getLoan();
 
             LoanResDTO loanResDTO = new LoanResDTO(
@@ -71,5 +76,17 @@ public class CartServiceImpl implements CartService {
             list.add(loanResDTO);
         }
         return list;
+    }
+
+    //가장 마지막에 추가한 상품 제거 (10개 이상 시)
+    @Override
+    public void deleteLastCart(Long snq, String email) {
+        Customer customer = customerRepo.findByEmail(email);
+        List<Cart> carts = cartRepo.findAllByCustomer(customer);
+        Cart cart = cartRepo.findFirstByCustomerOrderByIdAsc(customer);
+
+        if (carts.size() >= 10) {
+            cartRepo.deleteById(cart.getId());
+        }
     }
 }
