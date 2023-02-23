@@ -168,13 +168,21 @@ public class AuthServiceImpl implements AuthService {
     public String updateDetailInfo(UpdateDetailReqDTO detailReqDTO, String email) {
         Customer customer = customerRepository.findByEmail(email);
         CustomerDetail detail = customerDetailRepository.findByCustomer(customer).orElse(null);
+
+        String address = detailReqDTO.getAddress() == null || detailReqDTO.getAddress().isBlank()? detail.getAddress():detailReqDTO.getAddress();
+        Integer age = detailReqDTO.getAge() == null? detail.getAge():detailReqDTO.getAge();
+        Double crdtGrade = detailReqDTO.getCrdtGrade() == null? detail.getCrdtGrade():detailReqDTO.getCrdtGrade();
+        String job = detailReqDTO.getJob() == null || detailReqDTO.getJob().isBlank()? detail.getJob():detailReqDTO.getJob();
+        Integer income = detailReqDTO.getIncome() == null? detail.getIncome():detailReqDTO.getIncome();
+        String bank = detailReqDTO.getBank() == null || detailReqDTO.getBank().isBlank()? detail.getBank():detailReqDTO.getBank();
+
         Integer result = customerDetailRepository.updateDetailInfo(
-                detailReqDTO.getAddress(),
-                detailReqDTO.getAge(),
-                detailReqDTO.getCrdtGrade(),
-                detailReqDTO.getJob(),
-                detailReqDTO.getIncome(),
-                detailReqDTO.getBank(),
+                address,
+                age,
+                crdtGrade,
+                job,
+                income,
+                bank,
                 detail.getId());
 
         return result > 0? "success":"failed";
