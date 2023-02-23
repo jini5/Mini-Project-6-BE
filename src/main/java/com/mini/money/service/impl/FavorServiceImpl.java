@@ -30,7 +30,7 @@ public class FavorServiceImpl implements FavorService {
     private final LoanRepository loanRepo;
 
 
-
+    @Transactional
     @Override
     public String addFavor(String email, Long snq) {
         Customer customer = customerRepo.findByEmail(email);

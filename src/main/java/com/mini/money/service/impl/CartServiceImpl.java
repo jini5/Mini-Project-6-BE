@@ -25,6 +25,7 @@ public class CartServiceImpl implements CartService {
     private final LoanRepository loanRepo;
 
 
+    @Transactional
     @Override
     public String addCart(Long snq, String email) {
         Loan loan = loanRepo.findBySnq(snq).orElse(null);

@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -15,6 +16,7 @@ public class TokenServiceImpl implements TokenService{
     private final TokenRepository tokenRepository;
 
 
+    @Transactional
     @Override
     public ResponseEntity logout(String token) {
         if(checkBlacklist(token)){
