@@ -20,4 +20,9 @@ public interface FavorRepository extends JpaRepository<Favor, Long> {
 
     @Query(value = "select f.loan from Favor f group by f.loan order by count(f.loan) desc")
     Page<Loan> findPopularData(Pageable pageable);
+
+    boolean existsByCustomerAndLoan(Customer customer, Loan loan);
+
+    @Query(value = "select min(f.id) from Favor f where f.customer = :customer order by f.id")
+    Long oldestFavorByCustomer(Customer customer);
 }

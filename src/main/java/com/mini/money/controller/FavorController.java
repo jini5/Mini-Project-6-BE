@@ -6,6 +6,8 @@ import com.mini.money.service.FavorService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,11 +25,18 @@ public class FavorController {
 
     @PostMapping("/favor")
     @ApiOperation(value = "찜 목록 상품 추가", notes = "제품ID(snq)를 통해 찜목록에 상품을 추가한다.")
-    public String addFavor(@RequestBody HashMap<String, Object> map, @AuthenticationPrincipal LogInReqDTO customer){
+    public ResponseEntity<String> addFavor(@RequestBody HashMap<String, Object> map, @AuthenticationPrincipal LogInReqDTO customer){
         System.out.println(map);
         String email = customer.getEmail();
         Long snq = Long.valueOf(map.get("snq").toString());
-        return service.addFavor(email, snq);
+
+        String message = service.addFavor(email, snq);
+
+        if (message.equals("success")) {
+            return new ResponseEntity<>(message, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+        }
     }
 
 
