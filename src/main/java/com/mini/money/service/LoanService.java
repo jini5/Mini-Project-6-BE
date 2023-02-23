@@ -37,7 +37,7 @@ public interface LoanService {
     Page<WholeResDTO> selectByKeyword(String keyword, Pageable pageable);
 
     HashMap<String, Object> selectLoanDetail(Long snq);
-    
-    List<CommendResDTO> memberCommendLoanList(LogInReqDTO logInReqDTO);
+
+    Page<CommendResDTO> memberCommendLoanList(LogInReqDTO logInReqDTO);
 
 }

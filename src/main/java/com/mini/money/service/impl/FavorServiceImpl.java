@@ -35,7 +35,20 @@ public class FavorServiceImpl implements FavorService {
     public String addFavor(String email, Long snq) {
         Customer customer = customerRepo.findByEmail(email);
         Loan loan = loanRepo.findBySnq(snq).orElse(null);
+        boolean result = favorRepo.existsByCustomerAndLoan(customer, loan);
+
+        if (result) {
+            return "failed";
+        }
+
         try {
+            List<Favor> existList = favorRepo.findAllByCustomer(customer);
+
+            if (existList.size() == 10) {
+                Long oldestId = favorRepo.oldestFavorByCustomer(customer);
+                favorRepo.deleteById(oldestId);
+            }
+
             favorRepo.save(new FavorReqDTO().toEntity(customer, loan));
         }catch (Exception err) {
             err.printStackTrace();

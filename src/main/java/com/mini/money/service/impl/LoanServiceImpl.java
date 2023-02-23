@@ -227,7 +227,7 @@ public class LoanServiceImpl implements LoanService {
     }
 
     @Override
-    public List<CommendResDTO> memberCommendLoanList(LogInReqDTO logInReqDTO) {
+    public Page<CommendResDTO> memberCommendLoanList(LogInReqDTO logInReqDTO) {
         Pageable page = PageRequest.of(0, 10);
         Customer customer = customerRepository.findByEmail(logInReqDTO.getEmail());
         String area = "전국";
@@ -238,7 +238,7 @@ public class LoanServiceImpl implements LoanService {
             }
         }
 
-        List<Loan> CommendByArea =  repository.findAllByAreaContaining(area,page);
+        Page<Loan> CommendByArea =  repository.findAllByAreaContaining(area,page);
 
         return getCommenResDTOS(CommendByArea);
     }
@@ -249,18 +249,10 @@ public class LoanServiceImpl implements LoanService {
         return wholeList;
     }
 
-    private List<CommendResDTO> getCommenResDTOS(List<Loan> CommendByArea) {
-        List<CommendResDTO> commendList = new ArrayList<>();
+    private Page<CommendResDTO> getCommenResDTOS(Page<Loan> commendByArea) {
 
-        for (int i = 0; i < CommendByArea.size(); i++) {
-            Loan loan = CommendByArea.get(i);
-            String[] targetList = loan.getLoanTarget().split(",");
+        Page<CommendResDTO> commendList = commendByArea.map(loan -> new CommendResDTO(loan));
 
-            CommendResDTO commendResDTO = new CommendResDTO(loan.getSnq(), loan.getLoanName(),
-                    loan.getLoanDescription(), targetList, loan.getBaseRate(), loan.getRate(), loan.getArea());
-
-            commendList.add(commendResDTO);
-        }
         return commendList;
     }
 

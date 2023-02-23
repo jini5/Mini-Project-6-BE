@@ -32,7 +32,7 @@ public class AuthServiceImpl implements AuthService {
     private final CustomerDetailRepository customerDetailRepository;
     private final JwtProvider jwtProvider;
     private final PasswordEncoder passwordEncoder;
-    public static final String pattern = "^[A-Za-z[0-9]]{8,12}$"; // 영문, 숫자 8~12자리
+    public static final String pattern = "^[A-Za-z[0-9]]{8,16}$"; // 영문, 숫자 8~16자리
 
 
     @Override
@@ -48,7 +48,7 @@ public class AuthServiceImpl implements AuthService {
             System.out.println(str);
             return new ResponseEntity(str,  HttpStatus.BAD_REQUEST);
         }else if(!signupReqDTO.getPassword().matches(pattern)) {
-            String str = "비밀번호는 문자,숫자만 사용가능합니다. \n8~12자리로 설정해주세요";
+            String str = "비밀번호는 문자,숫자만 사용가능합니다. \n8~16자리로 설정해주세요";
             return new ResponseEntity(str,  HttpStatus.BAD_REQUEST);
         }else{
             String password = encodingPassword(signupReqDTO.getPassword());

@@ -92,7 +92,7 @@ public class LoanController {
 
     @GetMapping("/finance/member/recommend/loan")
     @ApiOperation(value = "(로그인 상태)상품 추천 리스트 반환", notes = "사용자 지역의 상품 리스트를 반환, 설정한 지역이 없다면 전국")
-    public List<CommendResDTO> memberRecommendList(@AuthenticationPrincipal LogInReqDTO logInReqDTO) {
+    public Page<CommendResDTO> memberRecommendList(@AuthenticationPrincipal LogInReqDTO logInReqDTO) {
         return service.memberCommendLoanList(logInReqDTO);
     }
 
