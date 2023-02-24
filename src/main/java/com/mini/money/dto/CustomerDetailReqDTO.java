@@ -18,7 +18,7 @@ public class CustomerDetailReqDTO {
     private String job;
     private String bank;
     private Double crdtGrade;
-    private Integer income;
+    private String income;
 
     public CustomerDetail toEntity(Customer customer) {
         return CustomerDetail.builder()

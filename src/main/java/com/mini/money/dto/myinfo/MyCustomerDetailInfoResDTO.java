@@ -16,5 +16,5 @@ public class MyCustomerDetailInfoResDTO {
     private String job;
     private String bank;
     private Double crdtGrade;
-    private Integer income;
+    private String income;
 }

@@ -23,6 +23,6 @@ public class UpdateDetailReqDTO {
 
     private Double crdtGrade;
 
-    private Integer income;
+    private String income;
 
 }

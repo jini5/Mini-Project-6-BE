@@ -175,7 +175,7 @@ public class AuthServiceImpl implements AuthService {
         Integer age = detailReqDTO.getAge() == null? detail.getAge():detailReqDTO.getAge();
         Double crdtGrade = detailReqDTO.getCrdtGrade() == null? detail.getCrdtGrade():detailReqDTO.getCrdtGrade();
         String job = detailReqDTO.getJob() == null || detailReqDTO.getJob().isBlank()? detail.getJob():detailReqDTO.getJob();
-        Integer income = detailReqDTO.getIncome() == null? detail.getIncome():detailReqDTO.getIncome();
+        String income = detailReqDTO.getIncome() == null? detail.getIncome():detailReqDTO.getIncome();
         String bank = detailReqDTO.getBank() == null || detailReqDTO.getBank().isBlank()? detail.getBank():detailReqDTO.getBank();
 
         Integer result = customerDetailRepository.updateDetailInfo(
