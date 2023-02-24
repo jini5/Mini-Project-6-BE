@@ -38,7 +38,7 @@ public class CustomerDetail {
     private Double crdtGrade;
 
     @Column(name="income")
-    private Integer income;
+    private String income;
 
 
 }
