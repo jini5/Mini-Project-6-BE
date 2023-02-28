@@ -34,10 +34,13 @@ public class WebSecurityConfig {
   };
 
   private final JwtProvider jwtProvider;
-  private final JwtFilter jwtFilter;
+  private final JwtFilter jwtFilter;//시큐리티 필터는 보호막같은 것.
 
-  @Bean //회원 insert 서비스에서 비밀번호 암호화/복호화에 사용됨
+  @Bean
   public PasswordEncoder passwordEncoderParser() {
+    //회원 insert 서비스에서 비밀번호 암호화/복호화에 사용됨
+    //DB에 비밀번호를 plain text 그대로 저장한다면 보안상 위험이 따름으로 암호화해서 저장해야한다.
+    //PasswordEncoder는 BCryptPasswordEncoder가 사용되며 앞에 {id}로 PasswordEncoder 유형이 정의된다.
     return PasswordEncoderFactories.createDelegatingPasswordEncoder();
   }
 
@@ -73,6 +76,8 @@ public class WebSecurityConfig {
 
   @Bean
   public WebSecurityCustomizer webSecurityCustomizer() { //시큐리티 filter 제외, 그러나 OncePerRequestFilter는 시큐리티 필터가 아니라서 로직실행
+    //WebSecurityConfigurerAdapter 가 사용되지 않기 떄문에 SecurityFilterChain, WebSecurityCustomizer Bean으로 등록하여 Security 설정을 진행하였다.
+    //- WebSecurityCustomizer 부분은 PUBLIC_URLS 가 필터 적용이 제외되도록 하는 코드이다.
     return (web) -> web.ignoring().mvcMatchers(PUBLIC_URLS);
   }
 
