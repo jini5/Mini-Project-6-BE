@@ -24,7 +24,8 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class JwtFilter extends OncePerRequestFilter {
     //시큐리티 필터 전에 유저 권한이나 인증 관련 정보를 넘겨주는 클래스
-
+    //사용자가 보낸 요청 헤더에 올바른 token 이 있다면, 해당 token 으로부터
+    // email 과 authority 가 포함된 Authentication 객체를 생성해 SecurityContext 에 등록
     private final JwtProvider jwtProvider;
     private final TokenService tokenService;
 
@@ -36,6 +37,7 @@ public class JwtFilter extends OncePerRequestFilter {
         try{
             if(!tokenService.checkBlacklist(tokenHeader)){
                 LogInReqDTO logInReqDTO = jwtProvider.tokenToUser(tokenHeader);
+                //분석이 끝난 유저 객체에 있는 정보를 시큐리티컨텍스트 빈객체에 넘겨준다. (정보와, 권한을 넘겨준다.)
                 if(logInReqDTO !=null) {
                     SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(
                             logInReqDTO,

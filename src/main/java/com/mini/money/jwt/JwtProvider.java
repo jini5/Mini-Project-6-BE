@@ -22,6 +22,9 @@ public class JwtProvider {
 
     //토큰 발급, 로그인 서비스에서 사용
     public String makeToken(Customer customer){
+        //토큰 발급 시기를 생각해보면 토큰은 로그인하고나서 (findByEmailAndPassword) 실행후이므로 실행 결과값은 Optional<entity>가 나온다.
+        // 그것을 넣어야 하기 때문에 entity 인 Customer객체가 매개변수로 들어간다.
+        // 토큰은 문자열이므로 반환값은 String 이 된다.
         Date date=new Date();
 
         return Jwts.builder()
@@ -33,6 +36,7 @@ public class JwtProvider {
                 .signWith(SignatureAlgorithm.HS256,jwtProperties.getSecretKey())
                 .compact();
     }
+
 
     //토큰에서 userDTO로 바꿈, jwt필터에서 사용, 유효성검사 해야한다
     public LogInReqDTO tokenToUser(String token){
@@ -56,7 +60,9 @@ public class JwtProvider {
 
         return null;
     }
-    private Claims parsingToken(String token) { //Token 값을 claims로 바꿔주는 메서드
+    private Claims parsingToken(String token) {
+        //Token 값을 claims로 바꿔주는 메서드
+        //jwt필터에서 시큐리티 필터로 넘어가기전에 토큰을 시큐리티 필터가 알수 있게 바꿔준다고 생각
         return Jwts.parser()
                 .setSigningKey(jwtProperties.getSecretKey())
                 .parseClaimsJws(token)
